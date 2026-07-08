@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useCart } from '../context/useCart'
-import type { CartItem } from '../context/cartTypes'
 import { buildWhatsAppUrl } from '../config/contact'
+import type { CartItem } from '../context/cartTypes'
+import { useCart } from '../context/useCart'
 
 type PaymentMethod = 'cash' | 'transfer' | 'confirm'
 
@@ -250,7 +250,7 @@ export function CartDrawer() {
                         value={pickupDetail}
                         onChange={(event) => setPickupDetail(event.target.value)}
                         className="rounded-md border border-[#d9c891] bg-white px-3 py-2 text-sm text-[#123f1c] outline-none transition focus:border-[#d07b00] focus:ring-2 focus:ring-[#f2dfad]"
-                        placeholder="Ej: Retiro después de las 19"
+                        placeholder="Ej: Retiro despues de las 19"
                       />
                     </label>
 
@@ -266,49 +266,44 @@ export function CartDrawer() {
                   </div>
                 </section>
               )}
+
+              {items.length > 0 && (
+                <section className="mt-5 rounded-lg border border-[#d9c891] bg-[#fff8df] p-4">
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="text-sm font-black uppercase tracking-wide text-[#416343]">
+                      Total aproximado
+                    </span>
+                    <strong className="text-2xl font-black text-[#b3321f]">
+                      {formatPrice(totalPrice)}
+                    </strong>
+                  </div>
+
+                  <p className="mt-2 text-xs font-medium leading-5 text-[#416343]">
+                    El total es orientativo. La disponibilidad se confirma por
+                    WhatsApp antes del retiro.
+                  </p>
+
+                  <div className="mt-4 grid gap-2">
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center rounded-md bg-[#174f24] px-4 py-3 text-sm font-black text-white transition hover:bg-[#123f1c]"
+                    >
+                      Enviar pedido por WhatsApp
+                    </a>
+
+                    <button
+                      type="button"
+                      onClick={clearCart}
+                      className="rounded-md border border-[#d9c891] px-4 py-2 text-sm font-bold text-[#416343] transition hover:bg-white"
+                    >
+                      Vaciar pedido
+                    </button>
+                  </div>
+                </section>
+              )}
             </div>
-
-            <footer className="border-t border-[#d9c891] bg-[#fff8df] p-5">
-              <div className="flex items-center justify-between gap-4">
-                <span className="text-sm font-black uppercase tracking-wide text-[#416343]">
-                  Total aproximado
-                </span>
-                <strong className="text-2xl font-black text-[#b3321f]">
-                  {formatPrice(totalPrice)}
-                </strong>
-              </div>
-
-              <p className="mt-2 text-xs font-medium leading-5 text-[#416343]">
-                El total es orientativo. La disponibilidad se confirma por
-                WhatsApp antes del retiro.
-              </p>
-
-              <div className="mt-4 grid gap-2">
-                <a
-                  href={items.length > 0 ? whatsappUrl : undefined}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-disabled={items.length === 0}
-                  className={`inline-flex items-center justify-center rounded-md px-4 py-3 text-sm font-black transition ${
-                    items.length > 0
-                      ? 'bg-[#174f24] text-white hover:bg-[#123f1c]'
-                      : 'pointer-events-none bg-[#d9c891] text-[#416343]'
-                  }`}
-                >
-                  Enviar pedido por WhatsApp
-                </a>
-
-                {items.length > 0 && (
-                  <button
-                    type="button"
-                    onClick={clearCart}
-                    className="rounded-md border border-[#d9c891] px-4 py-2 text-sm font-bold text-[#416343] transition hover:bg-white"
-                  >
-                    Vaciar pedido
-                  </button>
-                )}
-              </div>
-            </footer>
           </aside>
         </div>
       )}
