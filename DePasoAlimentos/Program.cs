@@ -82,12 +82,20 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+try
 {
+    using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
     await StoreHoursSeeder.SeedAsync(dbContext);
     await AdminUserSeeder.SeedAsync(dbContext, app.Configuration);
+}
+catch (Exception exception)
+{
+    app.Logger.LogError(
+        exception,
+        "No se pudo inicializar la base de datos al iniciar la aplicacion."
+    );
 }
 
 // Configure the HTTP request pipeline.
@@ -103,6 +111,9 @@ app.UseCors(CorsPolicyName);
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.MapGet("/", () => Results.Ok("DePasoAlimentos API funcionando."));
+app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
 app.MapControllers();
 
