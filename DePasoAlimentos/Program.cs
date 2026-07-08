@@ -37,6 +37,9 @@ builder.Services.AddScoped<IFoodSuggestionService, FoodSuggestionService>();
 builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddScoped<IStoreHoursRepository, StoreHoursRepository>();
+builder.Services.AddScoped<IStoreHoursService, StoreHoursService>();
+
 var jwtKey = builder.Configuration["Jwt:Key"];
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];
 var jwtAudience = builder.Configuration["Jwt:Audience"];
@@ -75,6 +78,7 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
+    await StoreHoursSeeder.SeedAsync(dbContext);
     await AdminUserSeeder.SeedAsync(dbContext, app.Configuration);
 }
 

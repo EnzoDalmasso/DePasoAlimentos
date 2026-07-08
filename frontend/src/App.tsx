@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import { getFoodSuggestions } from './services/foodSuggestionsApi'
 import { getProducts } from './services/productsApi'
 import { getPromotions } from './services/promotionsApi'
+import { getStoreHours } from './services/storeHoursApi'
 import type { FoodSuggestion } from './types/foodSuggestion'
 import type { Product } from './types/product'
 import type { Promotion } from './types/promotion'
+import type { StoreHours } from './types/storeHours'
 import { Header } from './components/Header'
 import { SectionTabs, type Section } from './components/SectionTabs'
 import { ProductsSection } from './sections/ProductsSection'
@@ -15,6 +17,7 @@ import { SummaryStats } from './components/SummaryStats'
 import { AdminPage } from './pages/AdminPage'
 import { DetailModal } from './components/DetailModal'
 import { CartDrawer } from './components/CartDrawer'
+import { StoreHoursPanel } from './components/StoreHoursPanel'
 
 type SelectedDetail =
   | {
@@ -38,6 +41,7 @@ function App() {
   const [products, setProducts] = useState<Product[]>([])
   const [promotions, setPromotions] = useState<Promotion[]>([])
   const [foodSuggestions, setFoodSuggestions] = useState<FoodSuggestion[]>([])
+  const [storeHours, setStoreHours] = useState<StoreHours | null>(null)
 
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -52,16 +56,22 @@ function App() {
 
     async function loadData() {
       try {
-        const [productsFromApi, promotionsFromApi, foodSuggestionsFromApi] =
-          await Promise.all([
-            getProducts(),
-            getPromotions(),
-            getFoodSuggestions(),
-          ])
+        const [
+          productsFromApi,
+          promotionsFromApi,
+          foodSuggestionsFromApi,
+          storeHoursFromApi,
+        ] = await Promise.all([
+          getProducts(),
+          getPromotions(),
+          getFoodSuggestions(),
+          getStoreHours(),
+        ])
 
         setProducts(productsFromApi)
         setPromotions(promotionsFromApi)
         setFoodSuggestions(foodSuggestionsFromApi)
+        setStoreHours(storeHoursFromApi)
       } catch {
         setErrorMessage('No pudimos cargar la informacion.')
       } finally {
@@ -92,6 +102,10 @@ function App() {
             promotionsCount={promotions.length}
             foodSuggestionsCount={foodSuggestions.length}
           />
+        )}
+
+        {!isLoading && !errorMessage && storeHours && (
+          <StoreHoursPanel storeHours={storeHours} />
         )}
 
         {isLoading && (

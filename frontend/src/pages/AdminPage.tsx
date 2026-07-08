@@ -10,6 +10,7 @@ import {
 import type { Product } from '../types/product'
 import { PromotionsAdminSection } from './PromotionsAdminSection'
 import { FoodSuggestionsAdminSection } from './FoodSuggestionsAdminSection'
+import { StoreHoursAdminSection } from './StoreHoursAdminSection'
 import { ImageUploadField } from '../components/ImageUploadField'
 import {
   changeAdminPassword,
@@ -19,7 +20,12 @@ import {
   logoutAdmin,
 } from '../services/authService'
 
-type AdminSection = 'products' | 'promotions' | 'foodSuggestions' | 'account'
+type AdminSection =
+  | 'products'
+  | 'promotions'
+  | 'foodSuggestions'
+  | 'storeHours'
+  | 'account'
 
 export function AdminPage() {
   const [adminToken, setAdminToken] = useState(getAdminToken())
@@ -391,6 +397,14 @@ export function AdminPage() {
 
           <button
             type="button"
+            onClick={() => setActiveAdminSection('storeHours')}
+            className={getAdminTabClassName('storeHours')}
+          >
+            Horarios
+          </button>
+
+          <button
+            type="button"
             onClick={() => setActiveAdminSection('account')}
             className={getAdminTabClassName('account')}
           >
@@ -612,6 +626,10 @@ export function AdminPage() {
 
         {activeAdminSection === 'foodSuggestions' && (
           <FoodSuggestionsAdminSection />
+        )}
+
+        {activeAdminSection === 'storeHours' && (
+          <StoreHoursAdminSection />
         )}
 
         {activeAdminSection === 'account' && (

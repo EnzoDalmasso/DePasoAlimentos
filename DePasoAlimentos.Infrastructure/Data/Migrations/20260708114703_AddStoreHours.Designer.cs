@@ -4,6 +4,7 @@ using DePasoAlimentos.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DePasoAlimentos.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260708114703_AddStoreHours")]
+    partial class AddStoreHours
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,12 +83,6 @@ namespace DePasoAlimentos.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<TimeOnly?>("OpenTime")
-                        .HasColumnType("time");
-
-                    b.Property<TimeOnly?>("SecondCloseTime")
-                        .HasColumnType("time");
-
-                    b.Property<TimeOnly?>("SecondOpenTime")
                         .HasColumnType("time");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -242,12 +239,6 @@ namespace DePasoAlimentos.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
-
-                    b.Property<TimeOnly?>("SecondCloseTime")
-                        .HasColumnType("time");
-
-                    b.Property<TimeOnly?>("SecondOpenTime")
-                        .HasColumnType("time");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");

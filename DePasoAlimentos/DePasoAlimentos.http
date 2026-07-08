@@ -159,3 +159,55 @@ Authorization: Bearer {{AdminToken}}
 ### Food suggestions - delete
 DELETE {{BaseUrl}}/api/foodsuggestions/1
 Authorization: Bearer {{AdminToken}}
+
+### Store hours - public
+GET {{BaseUrl}}/api/store-hours
+Accept: application/json
+
+### Store hours - update weekly day
+PUT {{BaseUrl}}/api/store-hours/weekly/1
+Authorization: Bearer {{AdminToken}}
+Content-Type: application/json
+
+{
+  "isOpen": false,
+  "openTime": null,
+  "closeTime": null,
+  "secondOpenTime": null,
+  "secondCloseTime": null,
+  "notes": "Cerrado"
+}
+
+### Store hours - create special closed day
+POST {{BaseUrl}}/api/store-hours/special-days
+Authorization: Bearer {{AdminToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-12-25",
+  "isOpen": false,
+  "openTime": null,
+  "closeTime": null,
+  "secondOpenTime": null,
+  "secondCloseTime": null,
+  "reason": "Feriado"
+}
+
+### Store hours - update special day
+PUT {{BaseUrl}}/api/store-hours/special-days/1
+Authorization: Bearer {{AdminToken}}
+Content-Type: application/json
+
+{
+  "date": "2026-12-25",
+  "isOpen": true,
+  "openTime": "10:00",
+  "closeTime": "13:00",
+  "secondOpenTime": "18:00",
+  "secondCloseTime": "21:00",
+  "reason": "Horario especial de feriado"
+}
+
+### Store hours - delete special day
+DELETE {{BaseUrl}}/api/store-hours/special-days/1
+Authorization: Bearer {{AdminToken}}

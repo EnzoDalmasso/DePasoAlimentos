@@ -19,6 +19,10 @@ public class AppDbContext : DbContext
 
     public DbSet<AdminUser> AdminUsers { get; set; }
 
+    public DbSet<BusinessHour> BusinessHours { get; set; }
+
+    public DbSet<SpecialBusinessDay> SpecialBusinessDays { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -32,5 +36,13 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<AdminUser>().Property(adminUser => adminUser.Email).HasMaxLength(150);
 
         modelBuilder.Entity<AdminUser>().Property(adminUser => adminUser.PasswordHash).HasMaxLength(500);
+
+        modelBuilder.Entity<BusinessHour>().HasIndex(businessHour => businessHour.DayOfWeek).IsUnique();
+
+        modelBuilder.Entity<BusinessHour>().Property(businessHour => businessHour.Notes).HasMaxLength(200);
+
+        modelBuilder.Entity<SpecialBusinessDay>().HasIndex(specialDay => specialDay.Date).IsUnique();
+
+        modelBuilder.Entity<SpecialBusinessDay>().Property(specialDay => specialDay.Reason).HasMaxLength(200);
     }
 }

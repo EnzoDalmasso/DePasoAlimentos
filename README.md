@@ -25,6 +25,8 @@ El pedido se arma desde la web mediante un carrito simple y se envia por WhatsAp
 - Seccion de sugerencias de comidas.
 - Vista detalle para productos, promociones y sugerencias.
 - Carrito de pedido con envio por WhatsApp.
+- Horarios visibles para el cliente.
+- Dias especiales para feriados o cambios imprevistos.
 - Panel administrador protegido con login.
 - ABM de productos, promociones y sugerencias.
 - Subida de imagenes a Supabase Storage.
@@ -169,6 +171,16 @@ API:      http://localhost:5139
 | DELETE | `/api/foodsuggestions/{id}` |
 | PATCH | `/api/foodsuggestions/{id}/publish` |
 | PATCH | `/api/foodsuggestions/{id}/unpublish` |
+
+### Horarios
+
+| Metodo | Ruta |
+| --- | --- |
+| GET | `/api/store-hours` |
+| PUT | `/api/store-hours/weekly/{id}` |
+| POST | `/api/store-hours/special-days` |
+| PUT | `/api/store-hours/special-days/{id}` |
+| DELETE | `/api/store-hours/special-days/{id}` |
 
 ## Comandos utiles
 
