@@ -1,0 +1,14 @@
+services:
+  depasoalimentos-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: depasoalimentos-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "${SQL_SERVER_PASSWORD}"
+    ports:
+      - "1433:1433"
+    volumes:
+      - depasoalimentos_sql_data:/var/opt/mssql
+
+volumes:
+  depasoalimentos_sql_data:

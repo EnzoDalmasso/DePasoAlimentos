@@ -1,0 +1,161 @@
+@BaseUrl = http://localhost:5139
+@AdminToken = PASTE_ADMIN_JWT_TOKEN_HERE
+
+### Auth - login admin
+POST {{BaseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "your-admin-password"
+}
+
+### Auth - change admin password
+PUT {{BaseUrl}}/api/auth/change-password
+Authorization: Bearer {{AdminToken}}
+Content-Type: application/json
+
+{
+  "currentPassword": "current-password",
+  "newPassword": "new-password"
+}
+
+### Products - public list
+GET {{BaseUrl}}/api/products
+Accept: application/json
+
+### Products - admin list
+GET {{BaseUrl}}/api/products/admin
+Authorization: Bearer {{AdminToken}}
+Accept: application/json
+
+### Products - create
+POST {{BaseUrl}}/api/products
+Authorization: Bearer {{AdminToken}}
+Content-Type: application/json
+
+{
+  "name": "Sorrentinos de jamon y queso",
+  "description": "Pasta rellena congelada, lista para cocinar.",
+  "price": 4500,
+  "imageUrl": "https://your-project.supabase.co/storage/v1/object/public/depasoalimentos-images/products/sorrentinos.jpg"
+}
+
+### Products - update
+PUT {{BaseUrl}}/api/products/1
+Authorization: Bearer {{AdminToken}}
+Content-Type: application/json
+
+{
+  "name": "Sorrentinos de jamon y queso",
+  "description": "Pasta rellena congelada actualizada.",
+  "price": 4800,
+  "imageUrl": "https://your-project.supabase.co/storage/v1/object/public/depasoalimentos-images/products/sorrentinos.jpg",
+  "isActive": true
+}
+
+### Products - deactivate
+PATCH {{BaseUrl}}/api/products/1/deactivate
+Authorization: Bearer {{AdminToken}}
+
+### Products - activate
+PATCH {{BaseUrl}}/api/products/1/activate
+Authorization: Bearer {{AdminToken}}
+
+### Products - delete
+DELETE {{BaseUrl}}/api/products/1
+Authorization: Bearer {{AdminToken}}
+
+### Promotions - public list
+GET {{BaseUrl}}/api/promotions
+Accept: application/json
+
+### Promotions - admin list
+GET {{BaseUrl}}/api/promotions/admin
+Authorization: Bearer {{AdminToken}}
+Accept: application/json
+
+### Promotions - create
+POST {{BaseUrl}}/api/promotions
+Authorization: Bearer {{AdminToken}}
+Content-Type: application/json
+
+{
+  "title": "Combo pastas para 2",
+  "description": "Incluye sorrentinos, salsa de la casa y queso rallado.",
+  "promoPrice": 8500,
+  "imageUrl": "https://your-project.supabase.co/storage/v1/object/public/depasoalimentos-images/promotions/combo-pastas.jpg",
+  "startsAt": "2026-07-01T00:00:00",
+  "endsAt": "2026-07-31T23:59:59"
+}
+
+### Promotions - update
+PUT {{BaseUrl}}/api/promotions/1
+Authorization: Bearer {{AdminToken}}
+Content-Type: application/json
+
+{
+  "title": "Combo pastas para 2 actualizado",
+  "description": "Incluye sorrentinos, salsa de la casa, queso rallado y pan saborizado.",
+  "promoPrice": 9200,
+  "imageUrl": "https://your-project.supabase.co/storage/v1/object/public/depasoalimentos-images/promotions/combo-pastas.jpg",
+  "startsAt": "2026-07-01T00:00:00",
+  "endsAt": "2026-07-31T23:59:59",
+  "isActive": true
+}
+
+### Promotions - deactivate
+PATCH {{BaseUrl}}/api/promotions/1/deactivate
+Authorization: Bearer {{AdminToken}}
+
+### Promotions - activate
+PATCH {{BaseUrl}}/api/promotions/1/activate
+Authorization: Bearer {{AdminToken}}
+
+### Promotions - delete
+DELETE {{BaseUrl}}/api/promotions/1
+Authorization: Bearer {{AdminToken}}
+
+### Food suggestions - public list
+GET {{BaseUrl}}/api/foodsuggestions
+Accept: application/json
+
+### Food suggestions - admin list
+GET {{BaseUrl}}/api/foodsuggestions/admin
+Authorization: Bearer {{AdminToken}}
+Accept: application/json
+
+### Food suggestions - create
+POST {{BaseUrl}}/api/foodsuggestions
+Authorization: Bearer {{AdminToken}}
+Content-Type: application/json
+
+{
+  "title": "Sorrentinos con salsa de la casa",
+  "description": "Cocinar los sorrentinos en abundante agua hirviendo con sal. Servirlos con salsa caliente y queso rallado.",
+  "imageUrl": "https://your-project.supabase.co/storage/v1/object/public/depasoalimentos-images/food-suggestions/sorrentinos-salsa.jpg"
+}
+
+### Food suggestions - update
+PUT {{BaseUrl}}/api/foodsuggestions/1
+Authorization: Bearer {{AdminToken}}
+Content-Type: application/json
+
+{
+  "title": "Sorrentinos con salsa de la casa y queso",
+  "description": "Hervir los sorrentinos hasta que suban a la superficie. Servir con salsa caliente, queso rallado y pimienta.",
+  "imageUrl": "https://your-project.supabase.co/storage/v1/object/public/depasoalimentos-images/food-suggestions/sorrentinos-salsa.jpg",
+  "isPublished": true
+}
+
+### Food suggestions - unpublish
+PATCH {{BaseUrl}}/api/foodsuggestions/1/unpublish
+Authorization: Bearer {{AdminToken}}
+
+### Food suggestions - publish
+PATCH {{BaseUrl}}/api/foodsuggestions/1/publish
+Authorization: Bearer {{AdminToken}}
+
+### Food suggestions - delete
+DELETE {{BaseUrl}}/api/foodsuggestions/1
+Authorization: Bearer {{AdminToken}}

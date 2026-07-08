@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Elementos de la solución/">
+    <File Path="docker-compose.yml" />
+  </Folder>
+  <Project Path="DePasoAlimentos.Application/DePasoAlimentos.Application.csproj" />
+  <Project Path="DePasoAlimentos.Domain/DePasoAlimentos.Domain.csproj" />
+  <Project Path="DePasoAlimentos.Infrastructure/DePasoAlimentos.Infrastructure.csproj" />
+  <Project Path="DePasoAlimentos/DePasoAlimentos.csproj" />
+</Solution>
