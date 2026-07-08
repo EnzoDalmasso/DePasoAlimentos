@@ -1,14 +1,15 @@
 services:
   depasoalimentos-db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: depasoalimentos-sqlserver
+    image: postgres:16
+    container_name: depasoalimentos-postgres
     environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "${SQL_SERVER_PASSWORD}"
+      POSTGRES_DB: depasoalimentos
+      POSTGRES_USER: depasoalimentos
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
-      - "1433:1433"
+      - "5432:5432"
     volumes:
-      - depasoalimentos_sql_data:/var/opt/mssql
+      - depasoalimentos_postgres_data:/var/lib/postgresql/data
 
 volumes:
-  depasoalimentos_sql_data:
+  depasoalimentos_postgres_data:

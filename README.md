@@ -11,8 +11,9 @@ El pedido se arma desde la web mediante un carrito simple y se envia por WhatsAp
 - ASP.NET Core Web API
 - .NET 10
 - Entity Framework Core
-- SQL Server
-- Docker
+- PostgreSQL
+- Supabase Database
+- Docker opcional para base local
 - React
 - Tailwind CSS
 - Supabase Storage
@@ -49,12 +50,34 @@ DePasoAlimentos
 
 Antes de ejecutar el proyecto, crear los archivos locales a partir de los ejemplos incluidos.
 
-### Docker
+### Base de datos
+
+El proyecto esta preparado para usar PostgreSQL. Para produccion se recomienda Supabase Database, porque permite tener la base en el mismo ecosistema donde ya se guardan las imagenes.
+
+Connection string de ejemplo para Supabase:
+
+```text
+Host=db.YOUR_SUPABASE_PROJECT_REF.supabase.co;Port=5432;Database=postgres;Username=postgres;Password=YOUR_SUPABASE_DATABASE_PASSWORD;SSL Mode=Require;Trust Server Certificate=true
+```
+
+En un hosting de backend, la variable se carga como:
+
+```text
+ConnectionStrings__DefaultConnection
+```
+
+### Docker local opcional
 
 Crear `.env` en la raiz del proyecto:
 
 ```env
-SQL_SERVER_PASSWORD=YOUR_LOCAL_SQL_SERVER_PASSWORD
+POSTGRES_PASSWORD=YOUR_LOCAL_POSTGRES_PASSWORD
+```
+
+Si se usa Docker local, la connection string puede ser:
+
+```text
+Host=localhost;Port=5432;Database=depasoalimentos;Username=depasoalimentos;Password=YOUR_LOCAL_POSTGRES_PASSWORD
 ```
 
 ### Backend
@@ -93,7 +116,7 @@ VITE_SUPABASE_BUCKET=depasoalimentos-images
 
 ## Ejecucion
 
-Levantar SQL Server:
+Levantar PostgreSQL local opcional:
 
 ```powershell
 docker compose up -d
