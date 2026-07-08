@@ -42,6 +42,7 @@ DePasoAlimentos
 |-- DePasoAlimentos.Domain          # Entidades del dominio
 |-- DePasoAlimentos.Infrastructure  # EF Core, DbContext y repositorios
 |-- frontend                        # Aplicacion React
+|-- Dockerfile                      # Imagen de la API para deploy
 |-- docker-compose.yml
 `-- README.md
 ```
@@ -226,3 +227,22 @@ Lint frontend:
 cd frontend
 npm.cmd run lint
 ```
+
+## Deploy
+
+El frontend puede publicarse en Vercel desde la carpeta `frontend`.
+
+La API se puede publicar como servicio Docker en un hosting compatible. Variables necesarias para produccion:
+
+```text
+ConnectionStrings__DefaultConnection
+Jwt__Key
+Jwt__Issuer
+Jwt__Audience
+SeedAdmin__Email
+SeedAdmin__Password
+ASPNETCORE_ENVIRONMENT=Production
+PORT=8080
+```
+
+El valor de `ConnectionStrings__DefaultConnection` debe apuntar a Supabase PostgreSQL usando el Session Pooler.
