@@ -1,10 +1,16 @@
 # DePasoAlimentos
 
-Aplicacion web para la administracion y venta de alimentos congelados.
+Aplicacion web para la venta y gestion de alimentos congelados.
 
-El proyecto permite mostrar un catalogo publico de productos, promociones y sugerencias de comidas. Tambien incluye un panel administrador para cargar, editar y eliminar contenido, subir imagenes y gestionar la informacion que ve el cliente.
+El sistema permite publicar productos, promociones y sugerencias de comidas, administrar imagenes, precios, horarios de atencion y recibir pedidos por WhatsApp. El pago no se realiza online: el cliente arma el pedido desde la web y coordina el retiro con el comercio.
 
-El pedido se arma desde la web mediante un carrito simple y se envia por WhatsApp. No incluye pago online: el cliente coordina el retiro y paga en efectivo o transferencia.
+## URLs
+
+```text
+Web:   https://de-paso-alimentos.vercel.app
+Admin: https://de-paso-alimentos.vercel.app/admin
+API:   https://depasoalimentos.onrender.com
+```
 
 ## Tecnologias
 
@@ -13,10 +19,11 @@ El pedido se arma desde la web mediante un carrito simple y se envia por WhatsAp
 - Entity Framework Core
 - PostgreSQL
 - Supabase Database
-- Docker opcional para base local
-- React
-- Tailwind CSS
 - Supabase Storage
+- React
+- TypeScript
+- Tailwind CSS
+- Docker
 - JWT para autenticacion del administrador
 
 ## Funcionalidades
@@ -25,15 +32,18 @@ El pedido se arma desde la web mediante un carrito simple y se envia por WhatsAp
 - Seccion de promociones.
 - Seccion de sugerencias de comidas.
 - Vista detalle para productos, promociones y sugerencias.
-- Carrito de pedido con envio por WhatsApp.
-- Horarios visibles para el cliente.
+- Carrito simple con envio del pedido por WhatsApp.
+- Horarios de atencion visibles para el cliente.
 - Dias especiales para feriados o cambios imprevistos.
 - Panel administrador protegido con login.
 - ABM de productos, promociones y sugerencias.
-- Subida de imagenes a Supabase Storage.
+- Carga de imagenes desde el panel administrador.
+- Gestion de horarios desde el panel administrador.
 - Cambio de contrasena del administrador.
 
-## Estructura
+## Arquitectura
+
+El proyecto esta separado en capas para mantener responsabilidades claras:
 
 ```text
 DePasoAlimentos
@@ -43,64 +53,54 @@ DePasoAlimentos
 |-- DePasoAlimentos.Infrastructure  # EF Core, DbContext y repositorios
 |-- frontend                        # Aplicacion React
 |-- Dockerfile                      # Imagen de la API para deploy
-|-- docker-compose.yml
+|-- docker-compose.yml              # PostgreSQL local opcional
 `-- README.md
 ```
 
-## Configuracion local
+## Configuracion Local
 
-Antes de ejecutar el proyecto, crear los archivos locales a partir de los ejemplos incluidos.
-
-### Base de datos
-
-El proyecto esta preparado para usar PostgreSQL. Para produccion se recomienda Supabase Database, porque permite tener la base en el mismo ecosistema donde ya se guardan las imagenes.
-
-Connection string de ejemplo para Supabase:
-
-```text
-Host=db.YOUR_SUPABASE_PROJECT_REF.supabase.co;Port=5432;Database=postgres;Username=postgres;Password=YOUR_SUPABASE_DATABASE_PASSWORD;SSL Mode=Require;Trust Server Certificate=true
-```
-
-En un hosting de backend, la variable se carga como:
-
-```text
-ConnectionStrings__DefaultConnection
-```
-
-### Docker local opcional
-
-Crear `.env` en la raiz del proyecto:
-
-```env
-POSTGRES_PASSWORD=YOUR_LOCAL_POSTGRES_PASSWORD
-```
-
-Si se usa Docker local, la connection string puede ser:
-
-```text
-Host=localhost;Port=5432;Database=depasoalimentos;Username=depasoalimentos;Password=YOUR_LOCAL_POSTGRES_PASSWORD
-```
+Crear los archivos locales a partir de los ejemplos incluidos.
 
 ### Backend
 
-Crear `DePasoAlimentos/appsettings.Development.json` usando como referencia:
+Archivo:
+
+```text
+DePasoAlimentos/appsettings.Development.json
+```
+
+Referencia:
 
 ```text
 DePasoAlimentos/appsettings.Development.example.json
 ```
 
-Variables necesarias:
+Valores necesarios:
 
-- `ConnectionStrings:DefaultConnection`
-- `Jwt:Key`
-- `Jwt:Issuer`
-- `Jwt:Audience`
-- `SeedAdmin:Email`
-- `SeedAdmin:Password`
+```text
+ConnectionStrings:DefaultConnection
+Jwt:Key
+Jwt:Issuer
+Jwt:Audience
+SeedAdmin:Email
+SeedAdmin:Password
+```
+
+La base usa PostgreSQL. Para Supabase se recomienda usar el Session Pooler:
+
+```text
+Host=HOST_DEL_POOLER;Port=5432;Database=postgres;Username=USUARIO;Password=PASSWORD;SSL Mode=Require;Trust Server Certificate=true
+```
 
 ### Frontend
 
-Crear `frontend/.env.local` usando como referencia:
+Archivo:
+
+```text
+frontend/.env.local
+```
+
+Referencia:
 
 ```text
 frontend/.env.example
@@ -115,13 +115,7 @@ VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY
 VITE_SUPABASE_BUCKET=depasoalimentos-images
 ```
 
-## Ejecucion
-
-Levantar PostgreSQL local opcional:
-
-```powershell
-docker compose up -d
-```
+## Ejecucion Local
 
 Aplicar migraciones:
 
@@ -151,7 +145,7 @@ Admin:    http://localhost:5173/admin
 API:      http://localhost:5139
 ```
 
-## Endpoints principales
+## Endpoints Principales
 
 ### Auth
 
@@ -206,7 +200,24 @@ API:      http://localhost:5139
 | PUT | `/api/store-hours/special-days/{id}` |
 | DELETE | `/api/store-hours/special-days/{id}` |
 
-## Comandos utiles
+## Deploy
+
+El frontend esta desplegado en Vercel desde la carpeta `frontend`.
+
+La API esta preparada para desplegarse como servicio Docker. Variables requeridas en produccion:
+
+```text
+ConnectionStrings__DefaultConnection
+Jwt__Key
+Jwt__Issuer
+Jwt__Audience
+SeedAdmin__Email
+SeedAdmin__Password
+ASPNETCORE_ENVIRONMENT=Production
+PORT=8080
+```
+
+## Comandos Utiles
 
 Compilar backend:
 
@@ -228,21 +239,15 @@ cd frontend
 npm.cmd run lint
 ```
 
-## Deploy
+## Seguridad
 
-El frontend puede publicarse en Vercel desde la carpeta `frontend`.
-
-La API se puede publicar como servicio Docker en un hosting compatible. Variables necesarias para produccion:
+Los archivos locales con secretos no se versionan:
 
 ```text
-ConnectionStrings__DefaultConnection
-Jwt__Key
-Jwt__Issuer
-Jwt__Audience
-SeedAdmin__Email
-SeedAdmin__Password
-ASPNETCORE_ENVIRONMENT=Production
-PORT=8080
+.env
+.env.local
+.env.*.local
+DePasoAlimentos/appsettings.Development.json
+frontend/.env.local
+frontend/.env.*.local
 ```
-
-El valor de `ConnectionStrings__DefaultConnection` debe apuntar a Supabase PostgreSQL usando el Session Pooler.
