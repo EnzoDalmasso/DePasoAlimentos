@@ -1,127 +1,55 @@
 # DePasoAlimentos
 
-DePasoAlimentos es una aplicacion web para venta de alimentos congelados. El proyecto esta pensado como portfolio full stack, con foco principal en backend usando ASP.NET Core, Entity Framework Core, SQL Server y Docker, y un frontend publico construido con React y Tailwind CSS.
+Aplicacion web para la administracion y venta de alimentos congelados.
 
-La aplicacion permite administrar:
+El proyecto permite mostrar un catalogo publico de productos, promociones y sugerencias de comidas. Tambien incluye un panel administrador para cargar, editar y eliminar contenido, subir imagenes y gestionar la informacion que ve el cliente.
 
-- Productos del catalogo.
-- Promociones y combos.
-- Sugerencias de comidas.
-- Imagenes subidas a Supabase Storage.
-- Panel de administrador protegido con login.
-- Carrito simple que arma el pedido y lo envia por WhatsApp.
+El pedido se arma desde la web mediante un carrito simple y se envia por WhatsApp. No incluye pago online: el cliente coordina el retiro y paga en efectivo o transferencia.
 
-El pago no se realiza online. El cliente envia el pedido por WhatsApp y paga al retirar, en efectivo o transferencia.
+## Tecnologias
 
-## Stack Tecnologico
+- ASP.NET Core Web API
+- .NET 10
+- Entity Framework Core
+- SQL Server
+- Docker
+- React
+- Tailwind CSS
+- Supabase Storage
+- JWT para autenticacion del administrador
 
-- ASP.NET Core Web API.
-- .NET 10.
-- Entity Framework Core.
-- SQL Server 2022.
-- Docker / Docker Compose.
-- React.
-- Tailwind CSS.
-- Supabase Storage.
-- JWT para autenticacion del panel administrador.
+## Funcionalidades
 
-## Arquitectura
+- Catalogo publico de productos.
+- Seccion de promociones.
+- Seccion de sugerencias de comidas.
+- Vista detalle para productos, promociones y sugerencias.
+- Carrito de pedido con envio por WhatsApp.
+- Panel administrador protegido con login.
+- ABM de productos, promociones y sugerencias.
+- Subida de imagenes a Supabase Storage.
+- Cambio de contrasena del administrador.
 
-La solucion esta organizada en capas simples:
+## Estructura
 
 ```text
 DePasoAlimentos
-|-- DePasoAlimentos
-|   |-- Controllers
-|   |-- Program.cs
-|   |-- appsettings.json
-|   `-- DePasoAlimentos.http
-|
-|-- DePasoAlimentos.Application
-|   |-- DTOs
-|   |-- Interfaces
-|   `-- Services
-|
-|-- DePasoAlimentos.Domain
-|   `-- Entities
-|
-|-- DePasoAlimentos.Infrastructure
-|   |-- Data
-|   |   |-- AppDbContext.cs
-|   |   `-- Migrations
-|   `-- Repositories
-|
-|-- frontend
-|   |-- src
-|   |   |-- components
-|   |   |-- context
-|   |   |-- pages
-|   |   |-- sections
-|   |   |-- services
-|   |   `-- types
-|   `-- package.json
-|
+|-- DePasoAlimentos                 # API ASP.NET Core
+|-- DePasoAlimentos.Application     # DTOs, interfaces y servicios
+|-- DePasoAlimentos.Domain          # Entidades del dominio
+|-- DePasoAlimentos.Infrastructure  # EF Core, DbContext y repositorios
+|-- frontend                        # Aplicacion React
 |-- docker-compose.yml
 `-- README.md
 ```
 
-### Responsabilidades Por Capa
+## Configuracion local
 
-`DePasoAlimentos`
-
-Proyecto Web API. Contiene controllers, configuracion HTTP, CORS, autenticacion JWT, registro de servicios y archivo `.http` para probar endpoints.
-
-`DePasoAlimentos.Domain`
-
-Contiene las entidades principales del negocio:
-
-- `Product`
-- `Promotion`
-- `FoodSuggestion`
-- `AdminUser`
-
-Esta capa no depende de ASP.NET Core, Entity Framework ni SQL Server.
-
-`DePasoAlimentos.Application`
-
-Contiene DTOs, interfaces y servicios de aplicacion. Aca vive la logica de casos de uso: crear productos, actualizar promociones, publicar sugerencias, autenticar administradores, etc.
-
-`DePasoAlimentos.Infrastructure`
-
-Contiene detalles tecnicos: Entity Framework Core, `AppDbContext`, migraciones y repositorios.
-
-`frontend`
-
-Aplicacion React que consume la API. Incluye catalogo publico, promociones, sugerencias, panel admin, subida de imagenes a Supabase y carrito para enviar pedidos por WhatsApp.
-
-## Requisitos
-
-- .NET SDK 10.
-- Docker Desktop.
-- Node.js.
-- Visual Studio 2026 o compatible con .NET 10.
-- Opcional: Visual Studio Code para trabajar el frontend.
-- Cuenta de Supabase para almacenar imagenes.
-
-## Variables Y Secretos
-
-No se deben subir secretos reales a GitHub.
-
-Archivos locales ignorados por Git:
-
-- `.env`
-- `DePasoAlimentos/appsettings.Development.json`
-- `frontend/.env.local`
-
-Archivos de ejemplo que si se suben:
-
-- `.env.example`
-- `DePasoAlimentos/appsettings.Development.example.json`
-- `frontend/.env.example`
+Antes de ejecutar el proyecto, crear los archivos locales a partir de los ejemplos incluidos.
 
 ### Docker
 
-Crear el archivo `.env` en la raiz usando `.env.example` como base:
+Crear `.env` en la raiz del proyecto:
 
 ```env
 SQL_SERVER_PASSWORD=YOUR_LOCAL_SQL_SERVER_PASSWORD
@@ -129,28 +57,30 @@ SQL_SERVER_PASSWORD=YOUR_LOCAL_SQL_SERVER_PASSWORD
 
 ### Backend
 
-Crear `DePasoAlimentos/appsettings.Development.json` usando `appsettings.Development.example.json` como base:
+Crear `DePasoAlimentos/appsettings.Development.json` usando como referencia:
 
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost,1433;Database=DePasoAlimentosDb;User Id=sa;Password=YOUR_LOCAL_PASSWORD;TrustServerCertificate=True"
-  },
-  "Jwt": {
-    "Key": "YOUR_MINIMUM_32_CHARACTERS_SECRET_KEY",
-    "Issuer": "DePasoAlimentos",
-    "Audience": "DePasoAlimentos.Admin"
-  },
-  "SeedAdmin": {
-    "Email": "admin@example.com",
-    "Password": "YOUR_INITIAL_ADMIN_PASSWORD"
-  }
-}
+```text
+DePasoAlimentos/appsettings.Development.example.json
 ```
+
+Variables necesarias:
+
+- `ConnectionStrings:DefaultConnection`
+- `Jwt:Key`
+- `Jwt:Issuer`
+- `Jwt:Audience`
+- `SeedAdmin:Email`
+- `SeedAdmin:Password`
 
 ### Frontend
 
-Crear `frontend/.env.local` usando `frontend/.env.example` como base:
+Crear `frontend/.env.local` usando como referencia:
+
+```text
+frontend/.env.example
+```
+
+Variables necesarias:
 
 ```env
 VITE_API_BASE_URL=http://localhost:5139/api
@@ -159,243 +89,105 @@ VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY
 VITE_SUPABASE_BUCKET=depasoalimentos-images
 ```
 
-## Levantar SQL Server Con Docker
+## Ejecucion
 
-Desde la raiz de la solucion:
+Levantar SQL Server:
 
 ```powershell
-cd "C:\Proyectos .NET\DePasoAlimentos"
 docker compose up -d
 ```
 
-Verificar que el contenedor este corriendo:
-
-```powershell
-docker ps
-```
-
-El contenedor esperado es:
-
-```text
-depasoalimentos-sqlserver
-```
-
-## Aplicar Migraciones
-
-Desde la raiz de la solucion:
+Aplicar migraciones:
 
 ```powershell
 dotnet ef database update --project DePasoAlimentos.Infrastructure --startup-project DePasoAlimentos
 ```
 
-Esto crea la base:
-
-```text
-DePasoAlimentosDb
-```
-
-## Ejecutar La API
-
-Desde Visual Studio, ejecutar el proyecto `DePasoAlimentos`.
-
-Tambien se puede ejecutar por terminal:
+Ejecutar la API:
 
 ```powershell
 dotnet run --project .\DePasoAlimentos\DePasoAlimentos.csproj
 ```
 
-URL local:
-
-```text
-http://localhost:5139
-```
-
-OpenAPI en desarrollo:
-
-```text
-http://localhost:5139/openapi/v1.json
-```
-
-## Ejecutar El Frontend
-
-Desde la carpeta `frontend`:
+Ejecutar el frontend:
 
 ```powershell
-cd "C:\Proyectos .NET\DePasoAlimentos\frontend"
+cd frontend
 npm install
 npm.cmd run dev
 ```
 
-URL publica:
+URLs locales:
 
 ```text
-http://localhost:5173/
+Frontend: http://localhost:5173
+Admin:    http://localhost:5173/admin
+API:      http://localhost:5139
 ```
 
-Panel administrador:
-
-```text
-http://localhost:5173/admin
-```
-
-## Imagenes
-
-La API no guarda archivos binarios en SQL Server. Cada entidad guarda solo una URL:
-
-```csharp
-public string ImageUrl { get; set; } = string.Empty;
-```
-
-El archivo real se sube a Supabase Storage desde el panel admin del frontend.
-
-Flujo:
-
-```text
-Frontend Admin -> Supabase Storage -> URL publica -> API -> SQL Server
-```
-
-Convencion recomendada para carpetas en Supabase:
-
-```text
-products/
-promotions/
-food-suggestions/
-```
-
-## Autenticacion Admin
-
-El panel admin usa login con JWT.
-
-Flujo general:
-
-1. El administrador inicia sesion en `/admin`.
-2. La API devuelve un token JWT.
-3. El frontend guarda el token en `localStorage`.
-4. Las acciones administrativas envian `Authorization: Bearer TOKEN`.
-5. Los endpoints admin del backend validan rol `Admin`.
-
-Tambien existe una pantalla simple para cambiar la contrasena del administrador.
-
-## Endpoints Principales
+## Endpoints principales
 
 ### Auth
 
-| Metodo | Ruta | Descripcion |
-| --- | --- | --- |
-| POST | `/api/auth/login` | Inicia sesion admin. |
-| PUT | `/api/auth/change-password` | Cambia contrasena admin autenticado. |
+| Metodo | Ruta |
+| --- | --- |
+| POST | `/api/auth/login` |
+| PUT | `/api/auth/change-password` |
 
-### Products
+### Productos
 
-| Metodo | Ruta | Descripcion |
-| --- | --- | --- |
-| GET | `/api/products` | Lista productos activos para catalogo publico. |
-| GET | `/api/products/admin` | Lista todos los productos, activos e inactivos. |
-| GET | `/api/products/{id}` | Obtiene un producto activo por id. |
-| POST | `/api/products` | Crea un producto. |
-| PUT | `/api/products/{id}` | Actualiza un producto. |
-| DELETE | `/api/products/{id}` | Elimina un producto. |
-| PATCH | `/api/products/{id}/activate` | Activa un producto. |
-| PATCH | `/api/products/{id}/deactivate` | Desactiva un producto. |
+| Metodo | Ruta |
+| --- | --- |
+| GET | `/api/products` |
+| GET | `/api/products/admin` |
+| POST | `/api/products` |
+| PUT | `/api/products/{id}` |
+| DELETE | `/api/products/{id}` |
+| PATCH | `/api/products/{id}/activate` |
+| PATCH | `/api/products/{id}/deactivate` |
 
-### Promotions
+### Promociones
 
-| Metodo | Ruta | Descripcion |
-| --- | --- | --- |
-| GET | `/api/promotions` | Lista promociones activas. |
-| GET | `/api/promotions/admin` | Lista todas las promociones. |
-| GET | `/api/promotions/{id}` | Obtiene una promocion activa por id. |
-| POST | `/api/promotions` | Crea una promocion. |
-| PUT | `/api/promotions/{id}` | Actualiza una promocion. |
-| DELETE | `/api/promotions/{id}` | Elimina una promocion. |
-| PATCH | `/api/promotions/{id}/activate` | Activa una promocion. |
-| PATCH | `/api/promotions/{id}/deactivate` | Desactiva una promocion. |
+| Metodo | Ruta |
+| --- | --- |
+| GET | `/api/promotions` |
+| GET | `/api/promotions/admin` |
+| POST | `/api/promotions` |
+| PUT | `/api/promotions/{id}` |
+| DELETE | `/api/promotions/{id}` |
+| PATCH | `/api/promotions/{id}/activate` |
+| PATCH | `/api/promotions/{id}/deactivate` |
 
-### Food Suggestions
+### Sugerencias
 
-| Metodo | Ruta | Descripcion |
-| --- | --- | --- |
-| GET | `/api/foodsuggestions` | Lista sugerencias publicadas. |
-| GET | `/api/foodsuggestions/admin` | Lista todas las sugerencias. |
-| GET | `/api/foodsuggestions/{id}` | Obtiene una sugerencia publicada por id. |
-| POST | `/api/foodsuggestions` | Crea una sugerencia. |
-| PUT | `/api/foodsuggestions/{id}` | Actualiza una sugerencia. |
-| DELETE | `/api/foodsuggestions/{id}` | Elimina una sugerencia. |
-| PATCH | `/api/foodsuggestions/{id}/publish` | Publica una sugerencia. |
-| PATCH | `/api/foodsuggestions/{id}/unpublish` | Despublica una sugerencia. |
+| Metodo | Ruta |
+| --- | --- |
+| GET | `/api/foodsuggestions` |
+| GET | `/api/foodsuggestions/admin` |
+| POST | `/api/foodsuggestions` |
+| PUT | `/api/foodsuggestions/{id}` |
+| DELETE | `/api/foodsuggestions/{id}` |
+| PATCH | `/api/foodsuggestions/{id}/publish` |
+| PATCH | `/api/foodsuggestions/{id}/unpublish` |
 
-## Frontend
-
-La pagina publica incluye:
-
-- Catalogo de productos.
-- Promociones.
-- Sugerencias de comidas.
-- Vista detalle para cada tarjeta.
-- Carrito simple de pedido.
-- Envio del pedido por WhatsApp.
-
-El panel admin incluye:
-
-- Login.
-- ABM de productos.
-- ABM de promociones.
-- ABM de sugerencias.
-- Subida de imagenes.
-- Cambio de contrasena.
-
-## Validaciones
-
-Los DTOs de entrada usan Data Annotations:
-
-- Campos obligatorios con `[Required]`.
-- Longitudes maximas con `[StringLength]`.
-- Precios positivos con `[Range]`.
-
-En precios se usa:
-
-```csharp
-ParseLimitsInInvariantCulture = true
-```
-
-Esto evita errores por diferencias de cultura entre separador decimal con punto o coma.
-
-## Comandos Utiles
+## Comandos utiles
 
 Compilar backend:
 
 ```powershell
-dotnet build
+dotnet build -c Release
 ```
 
 Compilar frontend:
 
 ```powershell
-cd "C:\Proyectos .NET\DePasoAlimentos\frontend"
+cd frontend
 npm.cmd run build
 ```
 
 Lint frontend:
 
 ```powershell
-cd "C:\Proyectos .NET\DePasoAlimentos\frontend"
+cd frontend
 npm.cmd run lint
 ```
-
-## Notas De Diseno
-
-- Se usan DTOs para no exponer directamente entidades de dominio.
-- Se usan servicios para concentrar logica de aplicacion.
-- Se usan repositorios para aislar el acceso a datos.
-- Se usa JWT para proteger acciones administrativas.
-- Las imagenes se manejan como URLs externas para evitar guardar binarios en SQL Server.
-- El carrito vive en frontend porque no se guardan pedidos en base de datos en esta version.
-
-## Proximos Pasos
-
-- Pulir diseno visual con Figma.
-- Revisar responsive final en mobile.
-- Subir repositorio a GitHub.
-- Preparar deploy de frontend en Vercel.
-- Definir hosting para API y base de datos.
-- Ajustar CORS para el dominio real de produccion.
