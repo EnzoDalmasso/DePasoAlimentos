@@ -20,7 +20,7 @@ export function ImageWithFallback({
   if (!src || hasError) {
     return (
       <div
-        className={`flex items-center justify-center bg-slate-100 text-sm text-slate-500 ${className}`}
+        className={`flex items-center justify-center bg-[#f4fbf3] text-sm font-bold text-[#6d846f] ${className}`}
       >
         Imagen no disponible
       </div>

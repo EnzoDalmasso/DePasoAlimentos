@@ -108,27 +108,27 @@ export function CartDrawer() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-5 right-5 z-40 rounded-full bg-[#d65424] px-5 py-3 text-sm font-black text-white shadow-lg transition hover:bg-[#b3321f] focus:outline-none focus:ring-2 focus:ring-[#fff8df] focus:ring-offset-2"
+        className="fixed bottom-5 right-5 z-40 rounded-md bg-[#15552a] px-5 py-3 text-sm font-black text-white shadow-lg transition hover:bg-[#0e351e] focus:outline-none focus:ring-2 focus:ring-[#15552a] focus:ring-offset-2"
       >
         Pedido ({totalItems})
       </button>
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 bg-black/45"
+          className="fixed inset-0 z-50 bg-[#0e351e]/55 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
         >
           <aside
-            className="ml-auto flex h-full w-full max-w-lg flex-col bg-[#fffdf7] shadow-2xl"
+            className="ml-auto flex h-full w-full max-w-lg flex-col bg-[#f8fff5] shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
-            <header className="border-b border-[#d9c891] p-5">
+            <header className="border-b border-[#d9ead7] bg-white p-5">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-sm font-black uppercase tracking-wide text-[#b3321f]">
+                  <p className="text-sm font-black uppercase tracking-wide text-[#b83924]">
                     Tu pedido
                   </p>
-                  <h2 className="mt-1 text-2xl font-black text-[#123f1c]">
+                  <h2 className="mt-1 text-2xl font-black text-[#0e351e]">
                     Productos seleccionados
                   </h2>
                 </div>
@@ -136,7 +136,7 @@ export function CartDrawer() {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="rounded-md border border-[#d9c891] px-3 py-1.5 text-sm font-bold text-[#416343] transition hover:bg-[#fff8df]"
+                  className="rounded-md border border-[#cbe5c9] px-3 py-1.5 text-sm font-bold text-[#416343] transition hover:bg-[#eaf8ed]"
                 >
                   Cerrar
                 </button>
@@ -145,7 +145,7 @@ export function CartDrawer() {
 
             <div className="flex-1 overflow-y-auto p-5">
               {items.length === 0 && (
-                <p className="rounded-lg border border-dashed border-[#d9c891] bg-[#fff8df] p-4 text-sm font-medium leading-6 text-[#416343]">
+                <p className="rounded-lg border border-dashed border-[#cbe5c9] bg-white p-4 text-sm font-medium leading-6 text-[#416343]">
                   Todavia no agregaste productos o promociones al pedido.
                 </p>
               )}
@@ -154,14 +154,14 @@ export function CartDrawer() {
                 {items.map((item) => (
                   <article
                     key={`${item.type}-${item.id}`}
-                    className="rounded-lg border border-[#d9c891] bg-white p-4"
+                    className="rounded-lg border border-[#d9ead7] bg-white p-4 shadow-sm"
                   >
                     <div className="flex justify-between gap-4">
                       <div>
-                        <p className="text-xs font-black uppercase tracking-wide text-[#b3321f]">
+                        <p className="text-xs font-black uppercase tracking-wide text-[#b83924]">
                           {getItemLabel(item)}
                         </p>
-                        <h3 className="mt-1 font-black text-[#123f1c]">
+                        <h3 className="mt-1 font-black text-[#0e351e]">
                           {item.name}
                         </h3>
                         <p className="mt-1 text-sm font-bold text-[#416343]">
@@ -172,34 +172,34 @@ export function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => removeItem(item.type, item.id)}
-                        className="h-8 rounded-md border border-[#d9c891] px-2 text-xs font-bold text-[#b3321f] transition hover:bg-[#fff8df]"
+                        className="h-8 rounded-md border border-[#ead2ca] px-2 text-xs font-bold text-[#b83924] transition hover:bg-[#fff0eb]"
                       >
                         Quitar
                       </button>
                     </div>
 
                     <div className="mt-4 flex items-center justify-between gap-3">
-                      <div className="flex items-center rounded-md border border-[#d9c891]">
+                      <div className="flex items-center rounded-md border border-[#cbe5c9]">
                         <button
                           type="button"
                           onClick={() => decreaseQuantity(item.type, item.id)}
-                          className="px-3 py-1.5 text-lg font-black text-[#174f24] transition hover:bg-[#fff8df]"
+                          className="px-3 py-1.5 text-lg font-black text-[#15552a] transition hover:bg-[#eaf8ed]"
                         >
                           -
                         </button>
-                        <span className="min-w-10 px-3 text-center text-sm font-black text-[#123f1c]">
+                        <span className="min-w-10 px-3 text-center text-sm font-black text-[#0e351e]">
                           {item.quantity}
                         </span>
                         <button
                           type="button"
                           onClick={() => increaseQuantity(item.type, item.id)}
-                          className="px-3 py-1.5 text-lg font-black text-[#174f24] transition hover:bg-[#fff8df]"
+                          className="px-3 py-1.5 text-lg font-black text-[#15552a] transition hover:bg-[#eaf8ed]"
                         >
                           +
                         </button>
                       </div>
 
-                      <p className="text-lg font-black text-[#b3321f]">
+                      <p className="text-lg font-black text-[#b83924]">
                         {formatPrice(item.price * item.quantity)}
                       </p>
                     </div>
@@ -208,12 +208,12 @@ export function CartDrawer() {
               </div>
 
               {items.length > 0 && (
-                <section className="mt-5 rounded-lg border border-[#d9c891] bg-[#fff8df] p-4">
+                <section className="mt-5 rounded-lg border border-[#d9ead7] bg-white p-4 shadow-sm">
                   <div>
-                    <p className="text-xs font-black uppercase tracking-wide text-[#b3321f]">
+                    <p className="text-xs font-black uppercase tracking-wide text-[#b83924]">
                       Datos para WhatsApp
                     </p>
-                    <h3 className="mt-1 text-lg font-black text-[#123f1c]">
+                    <h3 className="mt-1 text-lg font-black text-[#0e351e]">
                       Completar pedido
                     </h3>
                   </div>
@@ -224,7 +224,7 @@ export function CartDrawer() {
                       <input
                         value={customerName}
                         onChange={(event) => setCustomerName(event.target.value)}
-                        className="rounded-md border border-[#d9c891] bg-white px-3 py-2 text-sm text-[#123f1c] outline-none transition focus:border-[#d07b00] focus:ring-2 focus:ring-[#f2dfad]"
+                        className="rounded-md border border-[#cbe5c9] bg-white px-3 py-2 text-sm text-[#0e351e] outline-none transition focus:border-[#15552a] focus:ring-2 focus:ring-[#d8f0d8]"
                         placeholder="Ej: Mauge Blanco"
                       />
                     </label>
@@ -236,7 +236,7 @@ export function CartDrawer() {
                         onChange={(event) =>
                           setPaymentMethod(event.target.value as PaymentMethod)
                         }
-                        className="rounded-md border border-[#d9c891] bg-white px-3 py-2 text-sm text-[#123f1c] outline-none transition focus:border-[#d07b00] focus:ring-2 focus:ring-[#f2dfad]"
+                        className="rounded-md border border-[#cbe5c9] bg-white px-3 py-2 text-sm text-[#0e351e] outline-none transition focus:border-[#15552a] focus:ring-2 focus:ring-[#d8f0d8]"
                       >
                         <option value="confirm">A confirmar</option>
                         <option value="cash">Efectivo</option>
@@ -249,7 +249,7 @@ export function CartDrawer() {
                       <input
                         value={pickupDetail}
                         onChange={(event) => setPickupDetail(event.target.value)}
-                        className="rounded-md border border-[#d9c891] bg-white px-3 py-2 text-sm text-[#123f1c] outline-none transition focus:border-[#d07b00] focus:ring-2 focus:ring-[#f2dfad]"
+                        className="rounded-md border border-[#cbe5c9] bg-white px-3 py-2 text-sm text-[#0e351e] outline-none transition focus:border-[#15552a] focus:ring-2 focus:ring-[#d8f0d8]"
                         placeholder="Ej: Retiro despues de las 19"
                       />
                     </label>
@@ -259,7 +259,7 @@ export function CartDrawer() {
                       <textarea
                         value={notes}
                         onChange={(event) => setNotes(event.target.value)}
-                        className="min-h-20 rounded-md border border-[#d9c891] bg-white px-3 py-2 text-sm text-[#123f1c] outline-none transition focus:border-[#d07b00] focus:ring-2 focus:ring-[#f2dfad]"
+                        className="min-h-20 rounded-md border border-[#cbe5c9] bg-white px-3 py-2 text-sm text-[#0e351e] outline-none transition focus:border-[#15552a] focus:ring-2 focus:ring-[#d8f0d8]"
                         placeholder="Ej: si no hay sorrentinos, reemplazar por noquis"
                       />
                     </label>
@@ -268,12 +268,12 @@ export function CartDrawer() {
               )}
 
               {items.length > 0 && (
-                <section className="mt-5 rounded-lg border border-[#d9c891] bg-[#fff8df] p-4">
+                <section className="mt-5 rounded-lg border border-[#cbe5c9] bg-[#eaf8ed] p-4">
                   <div className="flex items-center justify-between gap-4">
                     <span className="text-sm font-black uppercase tracking-wide text-[#416343]">
                       Total aproximado
                     </span>
-                    <strong className="text-2xl font-black text-[#b3321f]">
+                    <strong className="text-2xl font-black text-[#b83924]">
                       {formatPrice(totalPrice)}
                     </strong>
                   </div>
@@ -288,7 +288,7 @@ export function CartDrawer() {
                       href={whatsappUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center justify-center rounded-md bg-[#174f24] px-4 py-3 text-sm font-black text-white transition hover:bg-[#123f1c]"
+                      className="inline-flex items-center justify-center rounded-md bg-[#15552a] px-4 py-3 text-sm font-black text-white transition hover:bg-[#0e351e]"
                     >
                       Enviar pedido por WhatsApp
                     </a>
@@ -296,7 +296,7 @@ export function CartDrawer() {
                     <button
                       type="button"
                       onClick={clearCart}
-                      className="rounded-md border border-[#d9c891] px-4 py-2 text-sm font-bold text-[#416343] transition hover:bg-white"
+                      className="rounded-md border border-[#cbe5c9] bg-white px-4 py-2 text-sm font-bold text-[#416343] transition hover:bg-[#f8fff5]"
                     >
                       Vaciar pedido
                     </button>

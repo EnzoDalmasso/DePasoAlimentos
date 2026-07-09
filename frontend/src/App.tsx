@@ -87,8 +87,8 @@ function App() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f1e3] text-[#173f21]">
-      <section className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+    <main className="min-h-screen bg-[#eaf8ed] text-[#102318]">
+      <section className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
         <Header />
 
         <SectionTabs
@@ -96,25 +96,27 @@ function App() {
           onSectionChange={setActiveSection}
         />
 
-        {!isLoading && !errorMessage && (
-          <SummaryStats
-            productsCount={products.length}
-            promotionsCount={promotions.length}
-            foodSuggestionsCount={foodSuggestions.length}
-          />
-        )}
-
-        {!isLoading && !errorMessage && storeHours && (
-          <StoreHoursPanel storeHours={storeHours} />
-        )}
-
         {isLoading && (
-          <p className="mt-8 font-medium text-[#416343]">
-            Cargando informacion...
+          <section className="mt-6 rounded-lg border border-[#cbe5c9] bg-white/80 p-5 shadow-sm">
+            <p className="text-sm font-bold uppercase tracking-wide text-[#b83924]">
+              Cargando catalogo
+            </p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3].map((item) => (
+                <div
+                  key={item}
+                  className="h-72 animate-pulse rounded-lg bg-[#f8fff5]"
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {errorMessage && (
+          <p className="mt-6 rounded-lg border border-[#e6b0a6] bg-white p-4 font-bold text-[#b83924]">
+            {errorMessage}
           </p>
         )}
-
-        {errorMessage && <p className="mt-8 text-[#b3321f]">{errorMessage}</p>}
 
         {!isLoading && !errorMessage && activeSection === 'products' && (
           <ProductsSection
@@ -144,6 +146,18 @@ function App() {
               })
             }
           />
+        )}
+
+        {!isLoading && !errorMessage && (
+          <SummaryStats
+            productsCount={products.length}
+            promotionsCount={promotions.length}
+            foodSuggestionsCount={foodSuggestions.length}
+          />
+        )}
+
+        {!isLoading && !errorMessage && storeHours && (
+          <StoreHoursPanel storeHours={storeHours} />
         )}
 
         <ContactBanner />

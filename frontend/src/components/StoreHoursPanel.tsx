@@ -61,14 +61,14 @@ export function StoreHoursPanel({ storeHours }: StoreHoursPanelProps) {
   }
 
   return (
-    <section className="mt-6 rounded-lg border border-[#d9c891] bg-[#fffaf0] p-5 shadow-sm">
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-        <div>
-          <p className="text-sm font-black uppercase tracking-wide text-[#b3321f]">
+    <section className="mt-6 rounded-lg border border-[#cbe5c9] bg-[#f8fff5] p-5 shadow-sm">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]">
+        <div className="rounded-lg bg-white p-4">
+          <p className="text-sm font-black uppercase tracking-wide text-[#b83924]">
             Horarios
           </p>
 
-          <h2 className="mt-2 text-2xl font-black text-[#123f1c]">
+          <h2 className="mt-2 text-2xl font-black text-[#0e351e]">
             Hoy: {todaySchedule ? formatTimeRange(todaySchedule) : 'A confirmar'}
           </h2>
 
@@ -78,7 +78,7 @@ export function StoreHoursPanel({ storeHours }: StoreHoursPanelProps) {
             </p>
           )}
 
-          <p className="mt-3 text-sm leading-6 text-[#416343]">
+          <p className="mt-3 text-sm font-medium leading-6 text-[#416343]">
             Los horarios pueden cambiar por feriados o imprevistos. Las compras
             se coordinan por WhatsApp antes del retiro.
           </p>
@@ -86,7 +86,7 @@ export function StoreHoursPanel({ storeHours }: StoreHoursPanelProps) {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <h3 className="text-sm font-black uppercase tracking-wide text-[#416343]">
+            <h3 className="text-sm font-black uppercase tracking-wide text-[#15552a]">
               Semana
             </h3>
 
@@ -94,9 +94,9 @@ export function StoreHoursPanel({ storeHours }: StoreHoursPanelProps) {
               {storeHours.weeklyHours.map((businessHour) => (
                 <li
                   key={businessHour.id}
-                  className="flex items-center justify-between gap-3 border-b border-[#ead9a0] pb-2 last:border-0"
+                  className="flex items-center justify-between gap-3 border-b border-[#d9ead7] pb-2 last:border-0"
                 >
-                  <span className="font-bold text-[#123f1c]">
+                  <span className="font-bold text-[#0e351e]">
                     {businessHour.dayName}
                   </span>
 
@@ -109,7 +109,7 @@ export function StoreHoursPanel({ storeHours }: StoreHoursPanelProps) {
           </div>
 
           <div>
-            <h3 className="text-sm font-black uppercase tracking-wide text-[#416343]">
+            <h3 className="text-sm font-black uppercase tracking-wide text-[#15552a]">
               Dias especiales
             </h3>
 
@@ -122,14 +122,14 @@ export function StoreHoursPanel({ storeHours }: StoreHoursPanelProps) {
                 {upcomingSpecialDays.map((specialDay) => (
                   <li
                     key={specialDay.id}
-                    className="rounded-md border border-[#ead9a0] bg-white/60 p-3"
+                    className="rounded-md border border-[#d9ead7] bg-white p-3"
                   >
                     <div className="flex items-center justify-between gap-3">
-                      <span className="font-bold text-[#123f1c]">
+                      <span className="font-bold text-[#0e351e]">
                         {formatSpecialDate(specialDay.date)}
                       </span>
 
-                      <span className="font-semibold text-[#b3321f]">
+                      <span className="font-semibold text-[#b83924]">
                         {formatTimeRange(specialDay)}
                       </span>
                     </div>

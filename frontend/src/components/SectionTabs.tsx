@@ -16,8 +16,8 @@ export function SectionTabs({
   onSectionChange,
 }: SectionTabsProps) {
   return (
-    <nav className="mt-6 w-full overflow-x-auto">
-      <div className="inline-flex rounded-lg border border-[#d6bd6f] bg-[#fffaf0] p-1 shadow-sm">
+    <nav className="sticky top-0 z-30 -mx-4 mt-4 overflow-x-auto border-y border-[#d9ead7] bg-[#eaf8ed]/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-lg sm:border">
+      <div className="inline-flex min-w-full gap-2 sm:min-w-0">
         {tabs.map((tab) => (
           <button
             key={tab.value}
@@ -35,10 +35,10 @@ export function SectionTabs({
 
 function getTabClassName(isActive: boolean) {
   const baseClassName =
-    'whitespace-nowrap rounded-md px-4 py-2 text-sm font-bold transition'
+    'whitespace-nowrap rounded-md px-4 py-2.5 text-sm font-black transition sm:px-5'
   if (isActive) {
-    return `${baseClassName} bg-[#174f24] text-[#fff8df] shadow-sm`
+    return `${baseClassName} bg-[#15552a] text-white shadow-sm`
   }
 
-  return `${baseClassName} text-[#416343] hover:bg-[#f2dfad] hover:text-[#123f1c]`
+  return `${baseClassName} border border-[#cbe5c9] bg-white text-[#416343] hover:border-[#15552a] hover:text-[#0e351e]`
 }

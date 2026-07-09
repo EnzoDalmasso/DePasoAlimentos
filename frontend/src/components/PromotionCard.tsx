@@ -11,29 +11,42 @@ export function PromotionCard({ promotion, onSelect }: PromotionCardProps) {
   const { addItem } = useCart()
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-[#d9c891] bg-[#fffdf7] text-left shadow-sm transition hover:-translate-y-0.5 hover:border-[#d07b00] hover:shadow-md">
-      <ImageWithFallback
-        src={promotion.imageUrl}
-        alt={promotion.title}
-        className="h-48 w-full bg-[#fff8df] object-contain p-3"
-      />
+    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-[#ead9a0] bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:border-[#d77a16] hover:shadow-md">
+      <button
+        type="button"
+        onClick={() => onSelect(promotion)}
+        className="block bg-[#fff7e6] p-4 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#d77a16]"
+      >
+        <ImageWithFallback
+          src={promotion.imageUrl}
+          alt={promotion.title}
+          className="h-48 w-full object-contain"
+        />
+      </button>
 
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-bold text-[#123f1c]">{promotion.title}</h3>
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h3 className="font-black text-[#0e351e]">{promotion.title}</h3>
+            <p className="mt-1 text-xs font-bold uppercase tracking-wide text-[#8b5711]">
+              Promo
+            </p>
+          </div>
 
-        <p className="mt-2 flex-1 text-sm leading-6 text-[#416343]">
+          <p className="shrink-0 text-lg font-black text-[#d77a16]">
+            ${promotion.promoPrice.toLocaleString('es-AR')}
+          </p>
+        </div>
+
+        <p className="mt-3 line-clamp-3 flex-1 text-sm leading-6 text-[#416343]">
           {promotion.description}
         </p>
 
-        <p className="mt-4 text-lg font-black text-[#d07b00]">
-          ${promotion.promoPrice.toLocaleString('es-AR')}
-        </p>
-
-        <div className="mt-4 grid gap-2 sm:grid-cols-2">
+        <div className="mt-4 flex items-center gap-2">
           <button
             type="button"
             onClick={() => onSelect(promotion)}
-            className="rounded-md border border-[#d9c891] px-3 py-2 text-sm font-bold text-[#174f24] transition hover:bg-[#fff8df] focus:outline-none focus:ring-2 focus:ring-[#d07b00]"
+            className="flex-1 rounded-md border border-[#ead9a0] px-3 py-2 text-sm font-black text-[#8b5711] transition hover:bg-[#fff7e6] focus:outline-none focus:ring-2 focus:ring-[#d77a16]"
           >
             Ver detalle
           </button>
@@ -49,9 +62,10 @@ export function PromotionCard({ promotion, onSelect }: PromotionCardProps) {
                 imageUrl: promotion.imageUrl,
               })
             }
-            className="rounded-md bg-[#d65424] px-3 py-2 text-sm font-bold text-white transition hover:bg-[#b3321f] focus:outline-none focus:ring-2 focus:ring-[#d07b00]"
+            className="h-10 w-10 shrink-0 rounded-md bg-[#15552a] text-lg font-black text-white transition hover:bg-[#0e351e] focus:outline-none focus:ring-2 focus:ring-[#15552a] focus:ring-offset-2"
+            aria-label={`Agregar ${promotion.title} al pedido`}
           >
-            Agregar
+            +
           </button>
         </div>
       </div>
