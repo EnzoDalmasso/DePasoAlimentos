@@ -283,7 +283,7 @@ export function StoreHoursAdminSection() {
                 </label>
 
                 <label className="grid gap-1 text-sm font-medium text-slate-700">
-                  Apertura manana
+                  Apertura mañana
                   <input
                     type="time"
                     value={businessHour.openTime ?? ''}
@@ -298,7 +298,7 @@ export function StoreHoursAdminSection() {
                 </label>
 
                 <label className="grid gap-1 text-sm font-medium text-slate-700">
-                  Cierre manana
+                  Cierre mañana
                   <input
                     type="time"
                     value={businessHour.closeTime ?? ''}
@@ -408,7 +408,7 @@ export function StoreHoursAdminSection() {
 
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="grid gap-1 text-sm font-medium text-slate-700">
-              Apertura manana
+              Apertura mañana
               <input
                 type="time"
                 value={specialOpenTime}
@@ -419,7 +419,7 @@ export function StoreHoursAdminSection() {
             </label>
 
             <label className="grid gap-1 text-sm font-medium text-slate-700">
-              Cierre manana
+              Cierre mañana
               <input
                 type="time"
                 value={specialCloseTime}

@@ -41,6 +41,24 @@ function formatTimeRange(item: BusinessHour | SpecialBusinessDay) {
   return firstRange
 }
 
+function getWeekTimeRanges(item: BusinessHour | SpecialBusinessDay) {
+  if (!item.isOpen) {
+    return ['Cerrado']
+  }
+
+  if (!item.openTime || !item.closeTime) {
+    return ['Horario a confirmar']
+  }
+
+  const ranges = [`${item.openTime} a ${item.closeTime}`]
+
+  if (item.secondOpenTime && item.secondCloseTime) {
+    ranges.push(`${item.secondOpenTime} a ${item.secondCloseTime}`)
+  }
+
+  return ranges
+}
+
 function getTimeRanges(item?: BusinessHour | SpecialBusinessDay): TimeRange[] {
   if (!item) {
     return [{ value: 'A confirmar' }]
@@ -56,7 +74,7 @@ function getTimeRanges(item?: BusinessHour | SpecialBusinessDay): TimeRange[] {
 
   const ranges: TimeRange[] = [
     {
-      label: item.secondOpenTime && item.secondCloseTime ? 'Manana' : undefined,
+      label: item.secondOpenTime && item.secondCloseTime ? 'Mañana' : undefined,
       value: `${item.openTime} a ${item.closeTime}`,
     },
   ]
@@ -91,9 +109,9 @@ function TodayTimeRanges({
           className="flex items-baseline justify-between gap-3 rounded-md bg-[#f8fff5] px-3 py-2"
         >
           {range.label && (
-            <span className="text-xs font-black uppercase tracking-wide text-[#416343]">
-              {range.label}
-            </span>
+              <span className="text-xs font-black uppercase tracking-wide text-[#416343]">
+                {range.label}
+              </span>
           )}
 
           <span className={valueClassName}>{range.value}</span>
@@ -240,14 +258,16 @@ export function StoreHoursPanel({ storeHours }: StoreHoursPanelProps) {
                     {storeHours.weeklyHours.map((businessHour) => (
                       <li
                         key={businessHour.id}
-                        className="flex items-center justify-between gap-3 border-b border-[#d9ead7] pb-2 last:border-0"
+                        className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-3 border-b border-[#d9ead7] pb-2 last:border-0"
                       >
                         <span className="font-bold text-[#0e351e]">
                           {businessHour.dayName}
                         </span>
 
-                        <span className="text-right font-semibold text-[#416343]">
-                          {formatTimeRange(businessHour)}
+                        <span className="grid gap-1 text-right font-semibold text-[#416343]">
+                          {getWeekTimeRanges(businessHour).map((range) => (
+                            <span key={range}>{range}</span>
+                          ))}
                         </span>
                       </li>
                     ))}
