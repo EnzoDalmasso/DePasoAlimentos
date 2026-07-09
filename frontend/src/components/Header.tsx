@@ -4,26 +4,9 @@ export function Header() {
   return (
     <header className="overflow-hidden rounded-lg border border-[#cbe5c9] bg-[#f8fff5] shadow-sm">
       <div className="flex items-center justify-between gap-4 border-b border-[#d9ead7] px-4 py-3 sm:px-5">
-        <div className="flex min-w-0 items-center gap-3">
-          <img
-            src={logo}
-            alt="DePasoAlimentos"
-            className="h-12 w-12 shrink-0 object-contain"
-          />
-
-          <div className="min-w-0">
-            <p className="truncate text-lg font-black text-[#0e351e]">
-              DePasoAlimentos
-            </p>
-            <p className="text-xs font-bold uppercase tracking-wide text-[#b83924]">
-              Congelados caseros
-            </p>
-          </div>
-        </div>
-
-        <div className="hidden rounded-md border border-[#cbe5c9] bg-white px-3 py-2 text-sm font-bold text-[#15552a] sm:block">
-          Pedidos por WhatsApp
-        </div>
+        <p className="truncate text-lg font-black text-[#0e351e]">
+          DePasoAlimentos
+        </p>
       </div>
 
       <div className="grid gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center lg:px-8 lg:py-8">
