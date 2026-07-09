@@ -33,3 +33,138 @@
     color: white;
   }
 }
+
+.admin-page {
+  background:
+    radial-gradient(circle at top left, rgba(216, 240, 216, 0.95), transparent 32rem),
+    #eaf8ed;
+  color: #102318;
+}
+
+.admin-page > section > header,
+.admin-page > section > section,
+.admin-page > section > nav {
+  border-color: #cbe5c9;
+}
+
+.admin-page > section > header,
+.admin-page > section > section,
+.admin-page > section:first-child {
+  border-radius: 8px;
+}
+
+.admin-page > section > header,
+.admin-page > section > section {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 34px rgba(14, 53, 30, 0.08);
+}
+
+.admin-page > section > header {
+  border: 1px solid #cbe5c9;
+  padding: 1.25rem;
+}
+
+.admin-page > section > nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border: 1px solid #cbe5c9;
+  border-radius: 8px;
+  background: rgba(234, 248, 237, 0.95);
+  padding: 0.75rem;
+  backdrop-filter: blur(12px);
+}
+
+.admin-page h1,
+.admin-page h2,
+.admin-page h3,
+.admin-page .text-slate-950,
+.admin-page .text-slate-900 {
+  color: #0e351e;
+}
+
+.admin-page .text-slate-700,
+.admin-page .text-slate-600 {
+  color: #416343;
+}
+
+.admin-page .text-emerald-700 {
+  color: #15552a;
+}
+
+.admin-page .bg-slate-50 {
+  background-color: #eaf8ed;
+}
+
+.admin-page .bg-slate-100,
+.admin-page .disabled\:bg-slate-100:disabled {
+  background-color: #f4fbf3;
+}
+
+.admin-page .bg-emerald-50 {
+  background-color: #eaf8ed;
+}
+
+.admin-page .bg-emerald-600,
+.admin-page .bg-slate-950 {
+  background-color: #15552a;
+}
+
+.admin-page .hover\:bg-emerald-700:hover,
+.admin-page .hover\:bg-slate-100:hover {
+  background-color: #eaf8ed;
+}
+
+.admin-page .hover\:bg-emerald-700:hover,
+.admin-page .bg-slate-950:hover {
+  background-color: #0e351e;
+}
+
+.admin-page .border-slate-100,
+.admin-page .border-slate-200,
+.admin-page .border-slate-300 {
+  border-color: #cbe5c9;
+}
+
+.admin-page input,
+.admin-page textarea,
+.admin-page select {
+  border-color: #cbe5c9;
+  background-color: white;
+  color: #0e351e;
+}
+
+.admin-page input:focus,
+.admin-page textarea:focus,
+.admin-page select:focus,
+.admin-page .focus\:border-emerald-500:focus {
+  border-color: #15552a;
+  box-shadow: 0 0 0 3px rgba(216, 240, 216, 0.9);
+}
+
+.admin-page button,
+.admin-page a {
+  border-radius: 8px;
+}
+
+.admin-page table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.admin-page thead tr {
+  background: #f4fbf3;
+}
+
+.admin-page th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.admin-page th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.admin-page td,
+.admin-page th {
+  border-color: #d9ead7;
+}

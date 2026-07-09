@@ -288,7 +288,7 @@ export function AdminPage() {
 
   if (!adminToken) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4 text-slate-900">
+      <main className="admin-page flex min-h-screen items-center justify-center bg-slate-50 px-4 text-slate-900">
         <section className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
           <p className="text-sm font-medium uppercase text-emerald-700">
             Panel administrador
@@ -339,8 +339,8 @@ export function AdminPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900">
-      <section className="mx-auto max-w-6xl px-4 py-8">
+    <main className="admin-page min-h-screen bg-slate-50 text-slate-900">
+      <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <header className="border-b border-slate-200 pb-6">
           <p className="text-sm font-medium uppercase text-emerald-700">
             Panel administrador
