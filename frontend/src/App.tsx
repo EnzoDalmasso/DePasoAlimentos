@@ -96,6 +96,10 @@ function App() {
           onSectionChange={setActiveSection}
         />
 
+        {!isLoading && !errorMessage && storeHours && (
+          <StoreHoursPanel storeHours={storeHours} />
+        )}
+
         {isLoading && (
           <section className="mt-6 rounded-lg border border-[#cbe5c9] bg-white/80 p-5 shadow-sm">
             <p className="text-sm font-bold uppercase tracking-wide text-[#b83924]">
@@ -154,10 +158,6 @@ function App() {
             promotionsCount={promotions.length}
             foodSuggestionsCount={foodSuggestions.length}
           />
-        )}
-
-        {!isLoading && !errorMessage && storeHours && (
-          <StoreHoursPanel storeHours={storeHours} />
         )}
 
         <ContactBanner />
