@@ -9,6 +9,11 @@ type StoreHoursPanelProps = {
   storeHours: StoreHours
 }
 
+type TimeRange = {
+  label?: string
+  value: string
+}
+
 function getTodayDateValue() {
   const today = new Date()
   const year = today.getFullYear()
@@ -36,6 +41,68 @@ function formatTimeRange(item: BusinessHour | SpecialBusinessDay) {
   return firstRange
 }
 
+function getTimeRanges(item?: BusinessHour | SpecialBusinessDay): TimeRange[] {
+  if (!item) {
+    return [{ value: 'A confirmar' }]
+  }
+
+  if (!item.isOpen) {
+    return [{ value: 'Cerrado' }]
+  }
+
+  if (!item.openTime || !item.closeTime) {
+    return [{ value: 'Horario a confirmar' }]
+  }
+
+  const ranges: TimeRange[] = [
+    {
+      label: item.secondOpenTime && item.secondCloseTime ? 'Manana' : undefined,
+      value: `${item.openTime} a ${item.closeTime}`,
+    },
+  ]
+
+  if (item.secondOpenTime && item.secondCloseTime) {
+    ranges.push({
+      label: 'Tarde',
+      value: `${item.secondOpenTime} a ${item.secondCloseTime}`,
+    })
+  }
+
+  return ranges
+}
+
+function TodayTimeRanges({
+  ranges,
+  size = 'compact',
+}: {
+  ranges: TimeRange[]
+  size?: 'compact' | 'large'
+}) {
+  const valueClassName =
+    size === 'large'
+      ? 'text-xl font-black text-[#0e351e] sm:text-2xl'
+      : 'text-base font-black text-[#0e351e] sm:text-lg'
+
+  return (
+    <div className="mt-2 grid gap-1.5">
+      {ranges.map((range) => (
+        <div
+          key={`${range.label ?? 'horario'}-${range.value}`}
+          className="flex items-baseline justify-between gap-3 rounded-md bg-[#f8fff5] px-3 py-2"
+        >
+          {range.label && (
+            <span className="text-xs font-black uppercase tracking-wide text-[#416343]">
+              {range.label}
+            </span>
+          )}
+
+          <span className={valueClassName}>{range.value}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function formatSpecialDate(date: string) {
   return new Date(`${date}T00:00:00`).toLocaleDateString('es-AR', {
     day: '2-digit',
@@ -55,6 +122,7 @@ export function StoreHoursPanel({ storeHours }: StoreHoursPanelProps) {
     (businessHour) => businessHour.dayOfWeek === todayDayOfWeek,
   )
   const todaySchedule = todaySpecialDay ?? todayBusinessHour
+  const todayTimeRanges = getTimeRanges(todaySchedule)
   const upcomingSpecialDays = storeHours.specialDays
     .filter((specialDay) => specialDay.date >= todayDate)
     .slice(0, 3)
@@ -94,9 +162,7 @@ export function StoreHoursPanel({ storeHours }: StoreHoursPanelProps) {
               Horarios de atencion
             </p>
 
-            <h2 className="mt-1 text-lg font-black text-[#0e351e]">
-              Hoy: {todaySchedule ? formatTimeRange(todaySchedule) : 'A confirmar'}
-            </h2>
+            <TodayTimeRanges ranges={todayTimeRanges} />
 
             {todaySpecialDay?.reason && (
               <p className="mt-1 text-sm font-bold leading-6 text-[#416343]">
@@ -155,9 +221,7 @@ export function StoreHoursPanel({ storeHours }: StoreHoursPanelProps) {
                   Hoy
                 </p>
 
-                <h3 className="mt-2 text-2xl font-black text-[#0e351e]">
-                  {todaySchedule ? formatTimeRange(todaySchedule) : 'A confirmar'}
-                </h3>
+                <TodayTimeRanges ranges={todayTimeRanges} size="large" />
 
                 {todaySpecialDay?.reason && (
                   <p className="mt-2 text-sm font-bold leading-6 text-[#416343]">
