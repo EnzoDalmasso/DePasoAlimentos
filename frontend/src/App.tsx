@@ -18,6 +18,7 @@ import { AdminPage } from './pages/AdminPage'
 import { DetailModal } from './components/DetailModal'
 import { CartDrawer } from './components/CartDrawer'
 import { StoreHoursPanel } from './components/StoreHoursPanel'
+import { Footer } from './components/Footer'
 
 type SelectedDetail =
   | {
@@ -162,6 +163,8 @@ function App() {
 
         <ContactBanner />
       </section>
+
+      <Footer />
 
       <CartDrawer />
 
