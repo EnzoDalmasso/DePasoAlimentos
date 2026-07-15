@@ -18,7 +18,7 @@ export function Footer() {
             &copy; {currentYear} DePasoAlimentos. Todos los derechos reservados.
           </p>
 
-          <p className="mt-5 text-xs font-black uppercase tracking-[0.22em] text-[#d8bf70]">
+          <p className="mt-5 text-xs font-black uppercase tracking-[0.22em] text-white/55">
             Desarrollado por
           </p>
 
