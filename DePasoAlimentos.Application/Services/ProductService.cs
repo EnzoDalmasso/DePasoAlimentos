@@ -142,10 +142,15 @@ public class ProductService : IProductService
             Id = product.Id,
             Name = product.Name,
             Description = product.Description,
-            Category = product.Category,
+            Category = GetProductCategory(product.Category),
             Price = product.Price,
             ImageUrl = product.ImageUrl,
             IsActive = product.IsActive
         };
+    }
+
+    private static string GetProductCategory(string category)
+    {
+        return string.IsNullOrWhiteSpace(category) ? "Pastas" : category;
     }
 }

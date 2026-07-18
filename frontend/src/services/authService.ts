@@ -46,7 +46,7 @@ export async function changeAdminPassword(
   })
 
   if (!response.ok) {
-    throw new Error('No se pudo cambiar la contrasena.')
+    throw new Error('No se pudo cambiar la contraseña.')
   }
 }
 
