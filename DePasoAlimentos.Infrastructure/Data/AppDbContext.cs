@@ -29,6 +29,8 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Product>().Property(product => product.Price).HasPrecision(18, 2);
 
+        modelBuilder.Entity<Product>().Property(product => product.Category).HasMaxLength(80);
+
         modelBuilder.Entity<Promotion>().Property(promotion => promotion.PromoPrice).HasPrecision(18, 2);
 
         modelBuilder.Entity<AdminUser>().HasIndex(adminUser => adminUser.Email).IsUnique();

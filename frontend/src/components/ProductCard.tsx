@@ -1,6 +1,7 @@
 import type { Product } from '../types/product'
 import { useCart } from '../context/useCart'
 import { ImageWithFallback } from './ImageWithFallback'
+import { getProductCategoryLabel } from '../constants/productCategories'
 
 type ProductCardProps = {
   product: Product
@@ -29,7 +30,7 @@ export function ProductCard({ product, onSelect }: ProductCardProps) {
           <div>
             <h3 className="font-black text-[#0e351e]">{product.name}</h3>
             <p className="mt-1 text-xs font-bold uppercase tracking-wide text-[#6d846f]">
-              Producto
+              {getProductCategoryLabel(product.category)}
             </p>
           </div>
 

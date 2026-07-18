@@ -13,6 +13,11 @@ import { FoodSuggestionsAdminSection } from './FoodSuggestionsAdminSection'
 import { StoreHoursAdminSection } from './StoreHoursAdminSection'
 import { ImageUploadField } from '../components/ImageUploadField'
 import {
+  DEFAULT_PRODUCT_CATEGORY,
+  PRODUCT_CATEGORIES,
+  getProductCategoryLabel,
+} from '../constants/productCategories'
+import {
   changeAdminPassword,
   getAdminEmail,
   getAdminToken,
@@ -56,6 +61,7 @@ export function AdminPage() {
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [category, setCategory] = useState<string>(DEFAULT_PRODUCT_CATEGORY)
   const [price, setPrice] = useState('')
   const [imageUrl, setImageUrl] = useState('')
 
@@ -104,7 +110,7 @@ export function AdminPage() {
       setAdminEmail(loginResponse.email)
       setLoginPassword('')
     } catch {
-      setLoginErrorMessage('Email o contrasena incorrectos.')
+      setLoginErrorMessage('Email o contraseña incorrectos.')
     } finally {
       setIsLoggingIn(false)
     }
@@ -124,7 +130,7 @@ export function AdminPage() {
 
     if (newPassword !== confirmNewPassword) {
       setPasswordSuccessMessage(null)
-      setPasswordErrorMessage('La nueva contrasena no coincide.')
+      setPasswordErrorMessage('La nueva contraseña no coincide.')
       return
     }
 
@@ -138,10 +144,10 @@ export function AdminPage() {
       setCurrentPassword('')
       setNewPassword('')
       setConfirmNewPassword('')
-      setPasswordSuccessMessage('Contrasena actualizada correctamente.')
+      setPasswordSuccessMessage('Contraseña actualizada correctamente.')
     } catch {
       setPasswordSuccessMessage(null)
-      setPasswordErrorMessage('No pudimos cambiar la contrasena.')
+      setPasswordErrorMessage('No pudimos cambiar la contraseña.')
     } finally {
       setIsChangingPassword(false)
     }
@@ -168,6 +174,7 @@ export function AdminPage() {
           ...productBeingEdited,
           name,
           description,
+          category,
           price: Number(price),
           imageUrl,
         }
@@ -187,6 +194,7 @@ export function AdminPage() {
       const createdProduct = await createProduct({
         name,
         description,
+        category,
         price: Number(price),
         imageUrl,
       })
@@ -208,6 +216,7 @@ export function AdminPage() {
     setEditingProductId(product.id)
     setName(product.name)
     setDescription(product.description)
+    setCategory(product.category || DEFAULT_PRODUCT_CATEGORY)
     setPrice(product.price.toString())
     setImageUrl(product.imageUrl)
   }
@@ -216,6 +225,7 @@ export function AdminPage() {
     setEditingProductId(null)
     setName('')
     setDescription('')
+    setCategory(DEFAULT_PRODUCT_CATEGORY)
     setPrice('')
     setImageUrl('')
   }
@@ -295,7 +305,7 @@ export function AdminPage() {
           </p>
 
           <h1 className="mt-3 text-3xl font-bold text-slate-950">
-            Iniciar sesion
+            Iniciar sesión
           </h1>
 
           <form onSubmit={handleLogin} className="mt-6 grid gap-4">
@@ -311,7 +321,7 @@ export function AdminPage() {
             </label>
 
             <label className="grid gap-1 text-sm font-medium text-slate-700">
-              Contrasena
+              Contraseña
               <input
                 type="password"
                 value={loginPassword}
@@ -347,17 +357,17 @@ export function AdminPage() {
           </p>
 
           <h1 className="mt-3 text-4xl font-bold text-slate-950">
-            Gestion de DePasoAlimentos
+            Gestión de DePasoAlimentos
           </h1>
 
           <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
-            Desde aca vamos a cargar productos, promociones y sugerencias para
-            que se vean en la pagina publica.
+            Desde acá vamos a cargar productos, promociones y sugerencias para
+            que se vean en la página pública.
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <span className="text-sm text-slate-600">
-              Sesion iniciada como {adminEmail}
+              Sesión iniciada como {adminEmail}
             </span>
 
             <button
@@ -442,7 +452,7 @@ export function AdminPage() {
                 <p className="mt-1 text-sm text-slate-600">
                   {isEditing
                     ? 'Modifica los campos y guarda los cambios.'
-                    : 'Completa los campos para agregar un producto nuevo.'}
+                    : 'Completá los campos para agregar un producto nuevo.'}
                 </p>
               </div>
 
@@ -471,6 +481,22 @@ export function AdminPage() {
                     required
                   />
                 </label>
+
+                <label className="grid gap-1 text-sm font-medium text-slate-700">
+                  Categoría
+                  <select
+                    value={category}
+                    onChange={(event) => setCategory(event.target.value)}
+                    className="rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-emerald-500"
+                    required
+                  >
+                    {PRODUCT_CATEGORIES.map((productCategory) => (
+                      <option key={productCategory} value={productCategory}>
+                        {getProductCategoryLabel(productCategory)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               </div>
 
               <ImageUploadField
@@ -480,12 +506,12 @@ export function AdminPage() {
               />
 
               <label className="grid gap-1 text-sm font-medium text-slate-700">
-                Descripcion
+                Descripción
                 <textarea
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
                   className="min-h-24 rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-emerald-500"
-                  placeholder="Descripcion del producto"
+                  placeholder="Descripción del producto"
                   required
                 />
               </label>
@@ -547,6 +573,9 @@ export function AdminPage() {
                         <h3 className="mt-1 text-base font-bold text-slate-950">
                           {product.name}
                         </h3>
+                        <p className="mt-1 text-xs font-bold uppercase tracking-wide text-emerald-700">
+                          {getProductCategoryLabel(product.category)}
+                        </p>
                       </div>
 
                       {product.isActive ? (
@@ -610,6 +639,7 @@ export function AdminPage() {
                   <thead>
                     <tr className="border-b border-slate-200 text-slate-600">
                       <th className="py-3 pr-4 font-medium">Producto</th>
+                      <th className="py-3 pr-4 font-medium">Categoría</th>
                       <th className="py-3 pr-4 font-medium">Precio</th>
                       <th className="py-3 pr-4 font-medium">Estado</th>
                       <th className="py-3 pr-4 font-medium">Acciones</th>
@@ -629,6 +659,10 @@ export function AdminPage() {
                           <p className="mt-1 text-slate-600">
                             {product.description}
                           </p>
+                        </td>
+
+                        <td className="py-3 pr-4 align-top font-medium text-slate-700">
+                          {getProductCategoryLabel(product.category)}
                         </td>
 
                         <td className="py-3 pr-4 align-top font-medium text-slate-950">
@@ -714,7 +748,7 @@ export function AdminPage() {
               </h2>
 
               <p className="mt-1 text-sm text-slate-600">
-                Cambia la contrasena de acceso al panel administrador.
+                Cambiá la contraseña de acceso al panel administrador.
               </p>
             </div>
 
@@ -723,7 +757,7 @@ export function AdminPage() {
               className="mt-5 grid max-w-xl gap-4 border-t border-slate-200 pt-5"
             >
               <label className="grid gap-1 text-sm font-medium text-slate-700">
-                Contrasena actual
+                Contraseña actual
                 <input
                   type="password"
                   value={currentPassword}
@@ -734,7 +768,7 @@ export function AdminPage() {
               </label>
 
               <label className="grid gap-1 text-sm font-medium text-slate-700">
-                Nueva contrasena
+                Nueva contraseña
                 <input
                   type="password"
                   value={newPassword}
@@ -746,7 +780,7 @@ export function AdminPage() {
               </label>
 
               <label className="grid gap-1 text-sm font-medium text-slate-700">
-                Repetir nueva contrasena
+                Repetir nueva contraseña
                 <input
                   type="password"
                   value={confirmNewPassword}
@@ -777,7 +811,7 @@ export function AdminPage() {
                 >
                   {isChangingPassword
                     ? 'Actualizando...'
-                    : 'Cambiar contrasena'}
+                    : 'Cambiar contraseña'}
                 </button>
               </div>
             </form>

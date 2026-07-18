@@ -27,6 +27,7 @@ export async function getAdminProducts(): Promise<Product[]> {
 type CreateProductRequest = {
   name: string
   description: string
+  category: string
   price: number
   imageUrl: string
 }
@@ -34,6 +35,7 @@ type CreateProductRequest = {
 type UpdateProductRequest = {
   name: string
   description: string
+  category: string
   price: number
   imageUrl: string
   isActive: boolean

@@ -19,6 +19,7 @@ import { DetailModal } from './components/DetailModal'
 import { CartDrawer } from './components/CartDrawer'
 import { StoreHoursPanel } from './components/StoreHoursPanel'
 import { Footer } from './components/Footer'
+import { getProductCategoryLabel } from './constants/productCategories'
 
 type SelectedDetail =
   | {
@@ -170,7 +171,7 @@ function App() {
 
       {selectedDetail?.kind === 'product' && (
         <DetailModal
-          eyebrow="Producto"
+          eyebrow={getProductCategoryLabel(selectedDetail.item.category)}
           title={selectedDetail.item.name}
           description={selectedDetail.item.description}
           imageUrl={selectedDetail.item.imageUrl}

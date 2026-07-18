@@ -48,6 +48,7 @@ public class ProductService : IProductService
         {
             Name = request.Name,
             Description = request.Description,
+            Category = request.Category,
             Price = request.Price,
             ImageUrl = request.ImageUrl,
             IsActive = true,
@@ -73,6 +74,7 @@ public class ProductService : IProductService
 
         product.Name = request.Name;
         product.Description = request.Description;
+        product.Category = request.Category;
         product.Price = request.Price;
         product.ImageUrl = request.ImageUrl;
         product.IsActive = request.IsActive;
@@ -140,6 +142,7 @@ public class ProductService : IProductService
             Id = product.Id,
             Name = product.Name,
             Description = product.Description,
+            Category = product.Category,
             Price = product.Price,
             ImageUrl = product.ImageUrl,
             IsActive = product.IsActive
