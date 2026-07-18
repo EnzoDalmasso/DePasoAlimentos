@@ -532,7 +532,80 @@ export function AdminPage() {
             )}
 
             {!isLoading && !errorMessage && products.length > 0 && (
-              <div className="mt-4 overflow-x-auto">
+              <>
+              <div className="mt-4 grid gap-3 md:hidden">
+                {products.map((product) => (
+                  <article
+                    key={product.id}
+                    className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                          Producto
+                        </p>
+                        <h3 className="mt-1 text-base font-bold text-slate-950">
+                          {product.name}
+                        </h3>
+                      </div>
+
+                      {product.isActive ? (
+                        <span className="shrink-0 rounded-full bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700">
+                          Activo
+                        </span>
+                      ) : (
+                        <span className="shrink-0 rounded-full bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600">
+                          Inactivo
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="mt-3 whitespace-pre-line break-words text-sm leading-6 text-slate-600">
+                      {product.description}
+                    </p>
+
+                    <p className="mt-4 text-lg font-black text-slate-950">
+                      ${product.price.toLocaleString('es-AR')}
+                    </p>
+
+                    <div className="mt-4 grid gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleStartEditingProduct(product)}
+                        className="rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                      >
+                        Editar
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleToggleProductStatus(product)}
+                        disabled={changingStatusProductId === product.id}
+                        className="rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
+                      >
+                        {changingStatusProductId === product.id
+                          ? 'Actualizando...'
+                          : product.isActive
+                            ? 'Desactivar'
+                            : 'Activar'}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteProduct(product)}
+                        disabled={deletingProductId === product.id}
+                        className="rounded-md border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:bg-red-50 disabled:text-red-300"
+                      >
+                        {deletingProductId === product.id
+                          ? 'Eliminando...'
+                          : 'Eliminar'}
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <div className="mt-4 hidden overflow-x-auto md:block">
                 <table className="w-full border-collapse text-left text-sm">
                   <thead>
                     <tr className="border-b border-slate-200 text-slate-600">
@@ -616,6 +689,7 @@ export function AdminPage() {
                   </tbody>
                 </table>
               </div>
+              </>
             )}
           </section>
         )}
