@@ -21,7 +21,7 @@ export async function loginAdmin(
   })
 
   if (!response.ok) {
-    throw new Error('No se pudo iniciar sesion.')
+    throw new Error('No se pudo iniciar sesión.')
   }
 
   const loginResponse: LoginResponse = await response.json()

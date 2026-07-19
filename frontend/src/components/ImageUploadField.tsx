@@ -30,8 +30,12 @@ export function ImageUploadField({
 
       const uploadedImageUrl = await uploadImage(file, folder)
       onImageUrlChange(uploadedImageUrl)
-    } catch {
-      setErrorMessage('No pudimos subir la imagen.')
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : 'No pudimos subir la imagen.',
+      )
     } finally {
       setIsUploading(false)
       event.target.value = ''

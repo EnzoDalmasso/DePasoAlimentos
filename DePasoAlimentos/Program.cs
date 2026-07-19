@@ -3,6 +3,7 @@ using DePasoAlimentos.Application.Interfaces;
 using DePasoAlimentos.Application.Services;
 using DePasoAlimentos.Infrastructure.Data;
 using DePasoAlimentos.Infrastructure.Repositories;
+using DePasoAlimentos.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -47,6 +48,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddScoped<IStoreHoursRepository, StoreHoursRepository>();
 builder.Services.AddScoped<IStoreHoursService, StoreHoursService>();
+
+builder.Services.AddHttpClient<IImageStorageService, SupabaseImageStorageService>();
 
 var jwtKey = builder.Configuration["Jwt:Key"];
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];

@@ -1,30 +1,35 @@
-import { supabase, SUPABASE_BUCKET } from '../config/supabase'
+import { API_BASE_URL } from '../config/api'
+import { getAdminAuthHeaders } from './authService'
 
 type ImageFolder = 'products' | 'promotions' | 'food-suggestions'
+
+type UploadImageResponse = {
+  imageUrl: string
+}
 
 export async function uploadImage(
   file: File,
   folder: ImageFolder,
 ): Promise<string> {
-  const fileExtension = file.name.split('.').pop()
-  const fileName = `${crypto.randomUUID()}.${fileExtension}`
-  const filePath = `${folder}/${fileName}`
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('folder', folder)
 
-  const { error } = await supabase.storage
-    .from(SUPABASE_BUCKET)
-    .upload(filePath, file, {
-      cacheControl: '3600',
-      upsert: false,
-      contentType: file.type,
-    })
+  const response = await fetch(`${API_BASE_URL}/images/upload`, {
+    method: 'POST',
+    headers: getAdminAuthHeaders(),
+    body: formData,
+  })
 
-  if (error) {
-    throw error
+  if (!response.ok) {
+    const errorResponse = await response
+      .json()
+      .catch(() => ({ message: 'No pudimos subir la imagen.' }))
+
+    throw new Error(errorResponse.message ?? 'No pudimos subir la imagen.')
   }
 
-  const { data } = supabase.storage
-    .from(SUPABASE_BUCKET)
-    .getPublicUrl(filePath)
+  const uploadImageResponse: UploadImageResponse = await response.json()
 
-  return data.publicUrl
+  return uploadImageResponse.imageUrl
 }
