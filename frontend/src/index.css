@@ -82,6 +82,23 @@
       linear-gradient(135deg, #8c9b88 0%, #a7b29d 48%, #7d8c77 100%);
   }
 
+  @media (max-width: 640px) {
+    .logo-sage-panel {
+      background:
+        linear-gradient(
+          180deg,
+          rgba(239, 236, 218, 0.98) 0%,
+          rgba(239, 236, 218, 0.92) 48%,
+          rgba(239, 236, 218, 0.48) 76%,
+          rgba(239, 236, 218, 0.2) 100%
+        ),
+        radial-gradient(circle at 18% 18%, rgba(245, 234, 216, 0.18), transparent 18rem),
+        radial-gradient(circle at 78% 48%, rgba(14, 53, 30, 0.14), transparent 22rem),
+        url("./assets/hero-background.png") 82% bottom / auto 100% no-repeat,
+        linear-gradient(135deg, #8c9b88 0%, #a7b29d 48%, #7d8c77 100%);
+    }
+  }
+
   .depaso-button {
     transition:
       transform 180ms ease,
