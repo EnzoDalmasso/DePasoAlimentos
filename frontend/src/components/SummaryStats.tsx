@@ -10,8 +10,8 @@ export function SummaryStats({
   foodSuggestionsCount,
 }: SummaryStatsProps) {
   return (
-    <section className="mt-3 grid grid-cols-3 gap-2 sm:mt-6 sm:gap-3">
-      <div className="rounded-lg border border-[#cbe5c9] bg-white p-2.5 shadow-sm sm:p-4">
+    <section className="mt-4 grid grid-cols-3 gap-2 sm:mt-6 sm:gap-3">
+      <div className="editorial-card rounded-[1.25rem] p-2.5 sm:p-4">
         <p className="text-[0.7rem] font-bold text-[#416343] sm:text-sm">
           Productos<span className="hidden sm:inline"> activos</span>
         </p>
@@ -20,7 +20,7 @@ export function SummaryStats({
         </p>
       </div>
 
-      <div className="rounded-lg border border-[#ead9a0] bg-white p-2.5 shadow-sm sm:p-4">
+      <div className="editorial-card rounded-[1.25rem] p-2.5 sm:p-4">
         <p className="text-[0.7rem] font-bold text-[#8b5711] sm:text-sm">
           Promos
         </p>
@@ -29,7 +29,7 @@ export function SummaryStats({
         </p>
       </div>
 
-      <div className="rounded-lg border border-[#ead2ca] bg-white p-2.5 shadow-sm sm:p-4">
+      <div className="editorial-card rounded-[1.25rem] p-2.5 sm:p-4">
         <p className="text-[0.7rem] font-bold text-[#7d3528] sm:text-sm">
           Ideas<span className="hidden sm:inline"> publicadas</span>
         </p>

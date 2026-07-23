@@ -11,13 +11,13 @@ export function PromotionsSection({
   onPromotionSelect,
 }: PromotionsSectionProps) {
   return (
-    <section className="mt-6">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+    <section className="mt-10 animate-soft-rise">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-black uppercase tracking-wide text-[#d77a16]">
+          <p className="text-xs font-black uppercase tracking-[0.28em] text-[#d77a16]">
             Ahorro
           </p>
-          <h2 className="mt-1 text-2xl font-black text-[#0e351e]">
+          <h2 className="mt-2 text-3xl font-black tracking-tight text-[#0e351e] sm:text-4xl">
             Promociones
           </h2>
         </div>
@@ -31,7 +31,7 @@ export function PromotionsSection({
         <p className="mt-4 text-[#416343]">No hay promociones disponibles.</p>
       )}
 
-      <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {promotions.map((promotion) => (
           <PromotionCard
             key={promotion.id}

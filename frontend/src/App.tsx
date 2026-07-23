@@ -89,8 +89,10 @@ function App() {
   }
 
   return (
-    <main className="min-h-screen bg-[#eaf8ed] text-[#102318]">
-      <section className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
+    <main className="min-h-screen overflow-hidden bg-[#f5ead8] text-[#102318]">
+      <section className="relative mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
+        <div className="pointer-events-none absolute left-0 top-48 h-24 w-24 rounded-full border border-[#d8bf70]/40" />
+        <div className="pointer-events-none absolute right-2 top-[34rem] h-16 w-16 rounded-full bg-[#15552a]/10 blur-sm" />
         <Header />
 
         <SectionTabs
@@ -111,15 +113,15 @@ function App() {
         )}
 
         {isLoading && (
-          <section className="mt-6 rounded-lg border border-[#cbe5c9] bg-white/80 p-5 shadow-sm">
+          <section className="editorial-card mt-6 rounded-[1.5rem] p-5">
             <p className="text-sm font-bold uppercase tracking-wide text-[#b83924]">
-              Cargando catalogo
+              Cargando catálogo
             </p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {[1, 2, 3].map((item) => (
                 <div
                   key={item}
-                  className="h-72 animate-pulse rounded-lg bg-[#f8fff5]"
+                  className="h-72 animate-pulse rounded-[1.5rem] bg-white/70"
                 />
               ))}
             </div>
@@ -127,7 +129,7 @@ function App() {
         )}
 
         {errorMessage && (
-          <p className="mt-6 rounded-lg border border-[#e6b0a6] bg-white p-4 font-bold text-[#b83924]">
+          <p className="mt-6 rounded-[1.25rem] border border-[#e6b0a6] bg-white/80 p-4 font-bold text-[#b83924]">
             {errorMessage}
           </p>
         )}
@@ -182,7 +184,7 @@ function App() {
 
       {selectedDetail?.kind === 'promotion' && (
         <DetailModal
-          eyebrow="Promocion"
+          eyebrow="Promoción"
           title={selectedDetail.item.title}
           description={selectedDetail.item.description}
           imageUrl={selectedDetail.item.imageUrl}

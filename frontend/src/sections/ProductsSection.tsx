@@ -26,13 +26,13 @@ export function ProductsSection({
   }, [products, selectedCategory])
 
   return (
-    <section className="mt-6">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+    <section id="catalogo" className="mt-10 animate-soft-rise">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-black uppercase tracking-wide text-[#b83924]">
-            Catalogo
+          <p className="text-xs font-black uppercase tracking-[0.28em] text-[#b83924]">
+            Catálogo
           </p>
-          <h2 className="mt-1 text-2xl font-black text-[#0e351e]">
+          <h2 className="mt-2 text-3xl font-black tracking-tight text-[#0e351e] sm:text-4xl">
             Productos populares
           </h2>
         </div>
@@ -42,14 +42,14 @@ export function ProductsSection({
         </p>
       </div>
 
-      <div className="mt-5 flex gap-2 overflow-x-auto pb-2 sm:flex-wrap sm:overflow-visible sm:pb-0">
+      <div className="scrollbar-hidden mt-6 flex gap-2 overflow-x-auto pb-2 sm:flex-wrap sm:overflow-visible sm:pb-0">
         <button
           type="button"
           onClick={() => setSelectedCategory('Todos')}
-          className={`shrink-0 rounded-full px-4 py-2 text-sm font-black transition ${
+          className={`depaso-button shrink-0 rounded-full px-5 py-2.5 text-sm font-black transition ${
             selectedCategory === 'Todos'
-              ? 'bg-[#15552a] text-white shadow-sm'
-              : 'border border-[#cbe5c9] bg-white text-[#15552a] hover:bg-[#f4fbf3]'
+              ? 'bg-[#15552a] text-white shadow-[0_12px_24px_rgba(21,85,42,0.2)]'
+              : 'border border-[#d8bf70]/35 bg-white/75 text-[#15552a] hover:bg-[#fffaf0]'
           }`}
         >
           Todos
@@ -60,10 +60,10 @@ export function ProductsSection({
             key={productCategory}
             type="button"
             onClick={() => setSelectedCategory(productCategory)}
-            className={`shrink-0 rounded-full px-4 py-2 text-sm font-black transition ${
+            className={`depaso-button shrink-0 rounded-full px-5 py-2.5 text-sm font-black transition ${
               selectedCategory === productCategory
-                ? 'bg-[#15552a] text-white shadow-sm'
-                : 'border border-[#cbe5c9] bg-white text-[#15552a] hover:bg-[#f4fbf3]'
+                ? 'bg-[#15552a] text-white shadow-[0_12px_24px_rgba(21,85,42,0.2)]'
+                : 'border border-[#d8bf70]/35 bg-white/75 text-[#15552a] hover:bg-[#fffaf0]'
             }`}
           >
             {getProductCategoryLabel(productCategory)}
@@ -76,12 +76,12 @@ export function ProductsSection({
       )}
 
       {products.length > 0 && filteredProducts.length === 0 && (
-        <p className="mt-4 rounded-lg border border-[#d9ead7] bg-white p-4 font-bold text-[#416343]">
+        <p className="mt-4 rounded-[1.25rem] border border-[#d9ead7] bg-white/75 p-4 font-bold text-[#416343]">
           No hay productos cargados en esta categoría.
         </p>
       )}
 
-      <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filteredProducts.map((product) => (
           <ProductCard
             key={product.id}

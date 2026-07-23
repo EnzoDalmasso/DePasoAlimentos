@@ -12,29 +12,31 @@ export function ProductCard({ product, onSelect }: ProductCardProps) {
   const { addItem } = useCart()
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-[#d9ead7] bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:border-[#9fd39e] hover:shadow-md">
+    <article className="depaso-card-hover flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-[#d8bf70]/25 bg-white/80 text-left shadow-[0_14px_34px_rgba(61,37,18,0.08)] backdrop-blur">
       <button
         type="button"
         onClick={() => onSelect(product)}
-        className="block bg-[#f4fbf3] p-4 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#15552a]"
+        className="block bg-gradient-to-br from-[#f8fff5] to-[#f5ead8] p-4 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#15552a]"
       >
         <ImageWithFallback
           src={product.imageUrl}
           alt={product.name}
-          className="h-48 w-full object-contain"
+          className="h-52 w-full object-contain transition duration-300 hover:scale-[1.03]"
         />
       </button>
 
       <div className="flex flex-1 flex-col p-4">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h3 className="font-black text-[#0e351e]">{product.name}</h3>
-            <p className="mt-1 text-xs font-bold uppercase tracking-wide text-[#6d846f]">
+            <h3 className="text-lg font-black text-[#0e351e]">
+              {product.name}
+            </h3>
+            <p className="mt-1 text-xs font-black uppercase tracking-[0.18em] text-[#6d846f]">
               {getProductCategoryLabel(product.category)}
             </p>
           </div>
 
-          <p className="shrink-0 text-lg font-black text-[#b83924]">
+          <p className="shrink-0 rounded-full bg-[#fff0eb] px-3 py-1 text-base font-black text-[#b83924]">
             ${product.price.toLocaleString('es-AR')}
           </p>
         </div>
@@ -47,7 +49,7 @@ export function ProductCard({ product, onSelect }: ProductCardProps) {
           <button
             type="button"
             onClick={() => onSelect(product)}
-            className="flex-1 rounded-md border border-[#cbe5c9] px-3 py-2 text-sm font-black text-[#15552a] transition hover:bg-[#eaf8ed] focus:outline-none focus:ring-2 focus:ring-[#15552a]"
+            className="depaso-button flex-1 rounded-full border border-[#cbe5c9] bg-white/70 px-3 py-2.5 text-sm font-black text-[#15552a] focus:outline-none focus:ring-2 focus:ring-[#15552a]"
           >
             Ver detalle
           </button>
@@ -63,7 +65,7 @@ export function ProductCard({ product, onSelect }: ProductCardProps) {
                 imageUrl: product.imageUrl,
               })
             }
-            className="h-10 w-10 shrink-0 rounded-md bg-[#15552a] text-lg font-black text-white transition hover:bg-[#0e351e] focus:outline-none focus:ring-2 focus:ring-[#15552a] focus:ring-offset-2"
+            className="depaso-button h-11 w-11 shrink-0 rounded-full bg-[#15552a] text-lg font-black text-white focus:outline-none focus:ring-2 focus:ring-[#15552a] focus:ring-offset-2"
             aria-label={`Agregar ${product.name} al pedido`}
           >
             +

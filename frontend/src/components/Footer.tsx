@@ -2,14 +2,14 @@ const currentYear = new Date().getFullYear()
 
 export function Footer() {
   return (
-    <footer className="mt-8 bg-[#0e351e] text-white">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <footer className="mt-12 bg-[#0e351e] text-white">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="border-b border-white/10 pb-6">
           <p className="text-2xl font-black">DePasoAlimentos</p>
 
           <p className="mt-2 max-w-xl text-sm font-medium leading-6 text-[#d8f0d8]">
             Alimentos congelados, promociones y sugerencias para resolver
-            comidas practicas coordinando pedidos por WhatsApp.
+            comidas prácticas coordinando pedidos por WhatsApp.
           </p>
         </div>
 

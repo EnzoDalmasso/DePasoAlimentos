@@ -311,7 +311,7 @@ export function PromotionsAdminSection() {
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
-                    Promocion
+                    Promoción
                   </p>
                   <h3 className="mt-1 text-base font-bold text-slate-950">
                     {promotion.title}
@@ -378,7 +378,7 @@ export function PromotionsAdminSection() {
           <table className="w-full border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-slate-200 text-slate-600">
-                <th className="py-3 pr-4 font-medium">Promocion</th>
+                <th className="py-3 pr-4 font-medium">Promoción</th>
                 <th className="py-3 pr-4 font-medium">Precio</th>
                 <th className="py-3 pr-4 font-medium">Estado</th>
                 <th className="py-3 pr-4 font-medium">Acciones</th>

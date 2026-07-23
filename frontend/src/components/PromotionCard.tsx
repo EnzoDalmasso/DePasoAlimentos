@@ -11,29 +11,31 @@ export function PromotionCard({ promotion, onSelect }: PromotionCardProps) {
   const { addItem } = useCart()
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-[#ead9a0] bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:border-[#d77a16] hover:shadow-md">
+    <article className="depaso-card-hover flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-[#d8bf70]/35 bg-white/80 text-left shadow-[0_14px_34px_rgba(61,37,18,0.08)] backdrop-blur">
       <button
         type="button"
         onClick={() => onSelect(promotion)}
-        className="block bg-[#fff7e6] p-4 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#d77a16]"
+        className="block bg-gradient-to-br from-[#fff7e6] to-[#f5ead8] p-4 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#d77a16]"
       >
         <ImageWithFallback
           src={promotion.imageUrl}
           alt={promotion.title}
-          className="h-48 w-full object-contain"
+          className="h-52 w-full object-contain transition duration-300 hover:scale-[1.03]"
         />
       </button>
 
       <div className="flex flex-1 flex-col p-4">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h3 className="font-black text-[#0e351e]">{promotion.title}</h3>
-            <p className="mt-1 text-xs font-bold uppercase tracking-wide text-[#8b5711]">
+            <h3 className="text-lg font-black text-[#0e351e]">
+              {promotion.title}
+            </h3>
+            <p className="mt-1 text-xs font-black uppercase tracking-[0.18em] text-[#8b5711]">
               Promo
             </p>
           </div>
 
-          <p className="shrink-0 text-lg font-black text-[#d77a16]">
+          <p className="shrink-0 rounded-full bg-[#fff7e6] px-3 py-1 text-base font-black text-[#d77a16]">
             ${promotion.promoPrice.toLocaleString('es-AR')}
           </p>
         </div>
@@ -46,7 +48,7 @@ export function PromotionCard({ promotion, onSelect }: PromotionCardProps) {
           <button
             type="button"
             onClick={() => onSelect(promotion)}
-            className="flex-1 rounded-md border border-[#ead9a0] px-3 py-2 text-sm font-black text-[#8b5711] transition hover:bg-[#fff7e6] focus:outline-none focus:ring-2 focus:ring-[#d77a16]"
+            className="depaso-button flex-1 rounded-full border border-[#ead9a0] bg-white/70 px-3 py-2.5 text-sm font-black text-[#8b5711] focus:outline-none focus:ring-2 focus:ring-[#d77a16]"
           >
             Ver detalle
           </button>
@@ -62,7 +64,7 @@ export function PromotionCard({ promotion, onSelect }: PromotionCardProps) {
                 imageUrl: promotion.imageUrl,
               })
             }
-            className="h-10 w-10 shrink-0 rounded-md bg-[#15552a] text-lg font-black text-white transition hover:bg-[#0e351e] focus:outline-none focus:ring-2 focus:ring-[#15552a] focus:ring-offset-2"
+            className="depaso-button h-11 w-11 shrink-0 rounded-full bg-[#15552a] text-lg font-black text-white focus:outline-none focus:ring-2 focus:ring-[#15552a] focus:ring-offset-2"
             aria-label={`Agregar ${promotion.title} al pedido`}
           >
             +
