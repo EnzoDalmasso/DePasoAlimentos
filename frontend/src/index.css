@@ -67,9 +67,19 @@
   }
 
   .logo-sage-panel {
+    background-color: #8c9b88;
     background:
+      linear-gradient(
+        90deg,
+        rgba(239, 236, 218, 0.98) 0%,
+        rgba(239, 236, 218, 0.92) 42%,
+        rgba(239, 236, 218, 0.56) 67%,
+        rgba(239, 236, 218, 0.2) 100%
+      ),
       radial-gradient(circle at 18% 18%, rgba(245, 234, 216, 0.18), transparent 18rem),
       radial-gradient(circle at 78% 48%, rgba(14, 53, 30, 0.14), transparent 22rem),
+      url("./assets/depasoalimentos-logo.png") right center / min(650px, 56vw) auto no-repeat,
+      url("./assets/depasoalimentos-logo.png") center / cover no-repeat,
       linear-gradient(135deg, #8c9b88 0%, #a7b29d 48%, #7d8c77 100%);
   }
 

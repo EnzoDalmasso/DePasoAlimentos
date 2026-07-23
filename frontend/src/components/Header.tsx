@@ -1,5 +1,3 @@
-import logo from '../assets/depasoalimentos-logo.png'
-
 export function Header() {
   return (
     <header className="logo-sage-panel relative overflow-hidden rounded-[2rem] border border-[#d8bf70]/35 shadow-[0_30px_80px_rgba(61,37,18,0.16)]">
@@ -56,21 +54,13 @@ export function Header() {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-md animate-soft-rise">
+        <div className="relative mx-auto min-h-72 w-full max-w-md animate-soft-rise lg:min-h-[360px]">
           <div className="absolute -left-3 top-6 z-20 rounded-2xl border border-[#d8bf70]/45 bg-[#f5ead8]/78 px-4 py-3 text-sm font-black text-[#8b5711] shadow-lg backdrop-blur">
             Casero
           </div>
 
           <div className="absolute -right-2 bottom-8 z-20 rounded-2xl border border-[#cbe5c9] bg-[#15552a] px-4 py-3 text-sm font-black text-white shadow-lg">
             Listo para freezar
-          </div>
-
-          <div className="animate-soft-float">
-            <img
-              src={logo}
-              alt="DePasoAlimentos"
-              className="mx-auto h-72 w-full object-contain drop-shadow-[0_28px_44px_rgba(14,53,30,0.24)] sm:h-88"
-            />
           </div>
         </div>
       </div>
