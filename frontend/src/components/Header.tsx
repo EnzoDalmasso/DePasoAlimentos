@@ -7,7 +7,7 @@ export function Header() {
       <div className="absolute -right-16 bottom-8 h-56 w-56 rounded-full bg-[#15552a]/15 blur-3xl" />
 
       <div className="relative z-10 flex items-center justify-between gap-4 px-5 py-4 sm:px-8">
-        <p className="truncate text-lg font-black tracking-tight text-[#0e351e]">
+        <p className="brand-display truncate text-2xl font-bold tracking-tight text-[#0e351e]">
           DePasoAlimentos
         </p>
       </div>
@@ -18,11 +18,11 @@ export function Header() {
             Listos para cocinar
           </p>
 
-          <h1 className="mt-4 max-w-3xl text-5xl font-black leading-[0.95] tracking-tight text-[#0e351e] sm:text-6xl lg:text-7xl">
+          <h1 className="mt-4 max-w-3xl text-5xl font-bold leading-[0.95] tracking-tight text-[#0e351e] sm:text-6xl lg:text-7xl">
             Comida casera para resolver tu semana.
           </h1>
 
-          <p className="mt-5 max-w-2xl text-base font-medium leading-8 text-[#416343] sm:text-lg">
+          <p className="mt-5 max-w-2xl text-base font-semibold leading-8 text-[#416343] sm:text-lg">
             Pastas, pizzas, empanadas, salsas y promociones para resolver la
             comida sin perder tiempo. Elegís, armás tu pedido y coordinamos el
             retiro por WhatsApp.
@@ -65,11 +65,11 @@ export function Header() {
             Listo para freezar
           </div>
 
-          <div className="animate-soft-float rounded-[2rem] border border-white/80 bg-white/65 p-5 shadow-[0_28px_70px_rgba(14,53,30,0.16)] backdrop-blur">
+          <div className="logo-sage-panel animate-soft-float overflow-hidden rounded-[2rem] border border-[#d8bf70]/25 shadow-[0_28px_70px_rgba(14,53,30,0.16)]">
             <img
               src={logo}
               alt="DePasoAlimentos"
-              className="mx-auto h-64 w-full object-contain sm:h-80"
+              className="mx-auto h-72 w-full object-contain sm:h-88"
             />
           </div>
         </div>
