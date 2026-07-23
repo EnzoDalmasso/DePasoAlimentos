@@ -68,8 +68,9 @@
 
   .logo-sage-panel {
     background:
-      radial-gradient(circle at 50% 42%, rgba(245, 234, 216, 0.18), transparent 16rem),
-      linear-gradient(135deg, #8c9b88 0%, #a7b29d 52%, #7d8c77 100%);
+      radial-gradient(circle at 18% 18%, rgba(245, 234, 216, 0.18), transparent 18rem),
+      radial-gradient(circle at 78% 48%, rgba(14, 53, 30, 0.14), transparent 22rem),
+      linear-gradient(135deg, #8c9b88 0%, #a7b29d 48%, #7d8c77 100%);
   }
 
   .depaso-button {
