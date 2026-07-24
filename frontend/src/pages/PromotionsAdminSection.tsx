@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import {
   activatePromotion,
   createPromotion,
@@ -12,6 +12,8 @@ import { ImageUploadField } from '../components/ImageUploadField'
 
 
 export function PromotionsAdminSection() {
+  const promotionFormRef = useRef<HTMLFormElement | null>(null)
+
   const [promotions, setPromotions] = useState<Promotion[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -115,6 +117,13 @@ export function PromotionsAdminSection() {
     setDescription(promotion.description)
     setPromoPrice(promotion.promoPrice.toString())
     setImageUrl(promotion.imageUrl)
+
+    requestAnimationFrame(() => {
+      promotionFormRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    })
   }
 
   function resetPromotionForm() {
@@ -200,8 +209,9 @@ export function PromotionsAdminSection() {
       </div>
 
       <form
+        ref={promotionFormRef}
         onSubmit={handleSubmitPromotion}
-        className="mt-5 grid gap-3 border-t border-slate-200 pt-5"
+        className="mt-5 grid scroll-mt-24 gap-3 border-t border-slate-200 pt-5"
       >
         <div>
           <h3 className="font-semibold text-slate-950">

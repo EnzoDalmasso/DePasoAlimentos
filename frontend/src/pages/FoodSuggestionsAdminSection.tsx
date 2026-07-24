@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import {
   createFoodSuggestion,
   deleteFoodSuggestion,
@@ -11,6 +11,8 @@ import type { FoodSuggestion } from '../types/foodSuggestion'
 import { ImageUploadField } from '../components/ImageUploadField'
 
 export function FoodSuggestionsAdminSection() {
+  const foodSuggestionFormRef = useRef<HTMLFormElement | null>(null)
+
   const [foodSuggestions, setFoodSuggestions] = useState<FoodSuggestion[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -116,6 +118,13 @@ export function FoodSuggestionsAdminSection() {
     setTitle(foodSuggestion.title)
     setDescription(foodSuggestion.description)
     setImageUrl(foodSuggestion.imageUrl)
+
+    requestAnimationFrame(() => {
+      foodSuggestionFormRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    })
   }
 
   function resetFoodSuggestionForm() {
@@ -206,8 +215,9 @@ export function FoodSuggestionsAdminSection() {
       </div>
 
       <form
+        ref={foodSuggestionFormRef}
         onSubmit={handleSubmitFoodSuggestion}
-        className="mt-5 grid gap-3 border-t border-slate-200 pt-5"
+        className="mt-5 grid scroll-mt-24 gap-3 border-t border-slate-200 pt-5"
       >
         <div>
           <h3 className="font-semibold text-slate-950">

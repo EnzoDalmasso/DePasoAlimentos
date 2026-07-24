@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import {
   activateProduct,
   createProduct,
@@ -33,6 +33,8 @@ type AdminSection =
   | 'account'
 
 export function AdminPage() {
+  const productFormRef = useRef<HTMLFormElement | null>(null)
+
   const [adminToken, setAdminToken] = useState(getAdminToken())
   const [adminEmail, setAdminEmail] = useState(getAdminEmail() ?? '')
   const [loginEmail, setLoginEmail] = useState('')
@@ -219,6 +221,13 @@ export function AdminPage() {
     setCategory(product.category || DEFAULT_PRODUCT_CATEGORY)
     setPrice(product.price.toString())
     setImageUrl(product.imageUrl)
+
+    requestAnimationFrame(() => {
+      productFormRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    })
   }
 
   function resetProductForm() {
@@ -441,8 +450,9 @@ export function AdminPage() {
             </div>
 
             <form
+              ref={productFormRef}
               onSubmit={handleSubmitProduct}
-              className="mt-5 grid gap-3 border-t border-slate-200 pt-5"
+              className="mt-5 grid scroll-mt-24 gap-3 border-t border-slate-200 pt-5"
             >
               <div>
                 <h3 className="font-semibold text-slate-950">
