@@ -4,14 +4,6 @@ Aplicacion web para la venta y gestion de alimentos congelados.
 
 El sistema permite publicar productos, promociones y sugerencias de comidas, administrar imagenes, precios, horarios de atencion y recibir pedidos por WhatsApp. El pago no se realiza online: el cliente arma el pedido desde la web y coordina el retiro con el comercio.
 
-## URLs
-
-```text
-Web:   https://de-paso-alimentos.vercel.app
-Admin: https://de-paso-alimentos.vercel.app/admin
-API:   https://depasoalimentos.onrender.com
-```
-
 ## Tecnologias
 
 - ASP.NET Core Web API
@@ -135,14 +127,6 @@ Ejecutar el frontend:
 cd frontend
 npm install
 npm.cmd run dev
-```
-
-URLs locales:
-
-```text
-Frontend: http://localhost:5173
-Admin:    http://localhost:5173/admin
-API:      http://localhost:5139
 ```
 
 ## Endpoints Principales
