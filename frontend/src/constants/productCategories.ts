@@ -5,6 +5,7 @@ export const PRODUCT_CATEGORIES = [
   'Postres',
   'Almacen',
   'Carnes',
+  'Congelados',
   'Salsas',
   'Comidas preparadas',
   'Guarniciones',
