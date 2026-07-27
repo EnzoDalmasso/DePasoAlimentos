@@ -3,6 +3,7 @@ using DePasoAlimentos.Application.DTOs.Auth;
 using DePasoAlimentos.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace DePasoAlimentos.Controllers;
 
@@ -18,6 +19,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [EnableRateLimiting("AuthRateLimit")]
     public async Task<ActionResult<LoginResponse>> Login(LoginRequest request)
     {
         var loginResponse = await _authService.LoginAsync(request);

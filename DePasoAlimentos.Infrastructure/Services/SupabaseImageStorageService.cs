@@ -46,6 +46,7 @@ public class SupabaseImageStorageService : IImageStorageService
     {
         ValidateFile(fileName, contentType, fileSize);
         ValidateFolder(folder);
+        await ValidateImageSignatureAsync(fileStream, contentType);
 
         var fileExtension = AllowedContentTypes[contentType];
         var storageFileName = $"{Guid.NewGuid():N}{fileExtension}";
@@ -68,10 +69,8 @@ public class SupabaseImageStorageService : IImageStorageService
 
         if (!response.IsSuccessStatusCode)
         {
-            var responseBody = await response.Content.ReadAsStringAsync();
-
             throw new InvalidOperationException(
-                $"Supabase Storage rechazo la imagen. Status: {(int)response.StatusCode}. Response: {responseBody}"
+                $"Supabase Storage rechazo la imagen. Status: {(int)response.StatusCode}."
             );
         }
 
@@ -111,6 +110,46 @@ public class SupabaseImageStorageService : IImageStorageService
         if (!AllowedFolders.Contains(folder))
         {
             throw new ArgumentException("La carpeta indicada no es valida.");
+        }
+    }
+
+    private static async Task ValidateImageSignatureAsync(Stream fileStream, string contentType)
+    {
+        if (!fileStream.CanSeek)
+        {
+            throw new ArgumentException("No pudimos validar la imagen.");
+        }
+
+        var originalPosition = fileStream.Position;
+        var buffer = new byte[8];
+        var bytesRead = await fileStream.ReadAsync(buffer);
+
+        fileStream.Position = originalPosition;
+
+        var isJpeg =
+            bytesRead >= 3 &&
+            buffer[0] == 0xFF &&
+            buffer[1] == 0xD8 &&
+            buffer[2] == 0xFF;
+
+        var isPng =
+            bytesRead >= 8 &&
+            buffer[0] == 0x89 &&
+            buffer[1] == 0x50 &&
+            buffer[2] == 0x4E &&
+            buffer[3] == 0x47 &&
+            buffer[4] == 0x0D &&
+            buffer[5] == 0x0A &&
+            buffer[6] == 0x1A &&
+            buffer[7] == 0x0A;
+
+        var signatureMatchesContentType =
+            (contentType.Equals("image/jpeg", StringComparison.OrdinalIgnoreCase) && isJpeg) ||
+            (contentType.Equals("image/png", StringComparison.OrdinalIgnoreCase) && isPng);
+
+        if (!signatureMatchesContentType)
+        {
+            throw new ArgumentException("El archivo no parece ser una imagen JPG o PNG valida.");
         }
     }
 

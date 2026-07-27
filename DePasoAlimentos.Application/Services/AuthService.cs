@@ -102,6 +102,11 @@ public class AuthService : IAuthService
             throw new InvalidOperationException("La configuracion JWT no esta completa.");
         }
 
+        if (Encoding.UTF8.GetByteCount(jwtKey) < 32)
+        {
+            throw new InvalidOperationException("La clave JWT debe tener al menos 32 bytes.");
+        }
+
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, adminUser.Id.ToString()),
@@ -116,7 +121,7 @@ public class AuthService : IAuthService
             issuer: jwtIssuer,
             audience: jwtAudience,
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(8),
+            expires: DateTime.UtcNow.AddHours(2),
             signingCredentials: credentials
         );
 
