@@ -18,19 +18,17 @@ export function Footer() {
             &copy; {currentYear} DePasoAlimentos. Todos los derechos reservados.
           </p>
 
+          <p className="mt-5 text-xs font-black uppercase tracking-[0.22em] text-white/55">
+            Desarrollado por
+          </p>
+
           <a
             href="https://porfolio-enzo-dalmasso.vercel.app/#projects"
             target="_blank"
             rel="noreferrer"
-            className="group mt-5 inline-block"
+            className="mt-2 inline-block text-sm font-black uppercase tracking-[0.18em] text-white transition hover:text-[#d8bf70]"
           >
-            <span className="block text-xs font-black uppercase tracking-[0.22em] text-white/55 transition group-hover:text-[#d8bf70]">
-              Desarrollado por
-            </span>
-
-            <span className="mt-2 block text-sm font-black uppercase tracking-[0.18em] text-white transition group-hover:text-[#d8bf70]">
-              Enzo Dalmasso
-            </span>
+            Enzo Dalmasso
           </a>
         </div>
       </div>
