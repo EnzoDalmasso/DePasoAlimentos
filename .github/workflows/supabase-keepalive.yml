@@ -1,0 +1,35 @@
+name: Supabase keep-alive
+
+# Supabase pausa los proyectos del plan Free tras 7 dias sin actividad.
+# Este workflow hace una consulta real a la base dos veces por semana para evitarlo.
+
+on:
+  schedule:
+    - cron: "0 12 * * 1,4"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consultar la base de datos
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          if [ -z "$SUPABASE_DB_URL" ]; then
+            echo "::error::Falta el secret SUPABASE_DB_URL"
+            exit 1
+          fi
+          command -v psql >/dev/null || (sudo apt-get update && sudo apt-get install -y postgresql-client)
+          psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -c "select now();"
+
+      # GitHub desactiva los workflows programados tras 60 dias sin actividad en el repo.
+      # Re-habilitar el workflow desde la API reinicia ese contador.
+      - name: Mantener activo el workflow programado
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/supabase-keepalive.yml/enable"
