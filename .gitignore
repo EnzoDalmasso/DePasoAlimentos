@@ -17,3 +17,5 @@ DePasoAlimentos/appsettings.Development.json
 *.user
 *.suo
 *.rsuser
+
+.claude/settings.local.json
