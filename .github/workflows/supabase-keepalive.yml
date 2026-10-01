@@ -1,11 +1,11 @@
 name: Supabase keep-alive
 
 # Supabase pausa los proyectos del plan Free tras 7 dias sin actividad.
-# Este workflow hace una consulta real a la base dos veces por semana para evitarlo.
+# Este workflow escribe una fila en la base todos los dias para evitarlo.
 
 on:
   schedule:
-    - cron: "0 12 * * 1,4"
+    - cron: "0 12 * * *"
   workflow_dispatch:
 
 permissions:
@@ -25,7 +25,16 @@ jobs:
             exit 1
           fi
           command -v psql >/dev/null || (sudo apt-get update && sudo apt-get install -y postgresql-client)
-          psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -c "select now();"
+          # Supabase ya no cuenta las lecturas como actividad: hay que escribir.
+          psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 <<'SQL'
+          create schema if not exists keepalive;
+          create table if not exists keepalive.pings (
+            id bigserial primary key,
+            pinged_at timestamptz not null default now()
+          );
+          insert into keepalive.pings default values;
+          delete from keepalive.pings where pinged_at < now() - interval '30 days';
+          SQL
 
       # GitHub desactiva los workflows programados tras 60 dias sin actividad en el repo.
       # Re-habilitar el workflow desde la API reinicia ese contador.
