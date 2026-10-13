@@ -18,6 +18,7 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
+    [AllowAnonymous]
     [HttpPost("login")]
     [EnableRateLimiting("AuthRateLimit")]
     public async Task<ActionResult<LoginResponse>> Login(LoginRequest request)

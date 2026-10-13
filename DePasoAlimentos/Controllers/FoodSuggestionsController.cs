@@ -16,6 +16,7 @@ public class FoodSuggestionsController : ControllerBase
         _foodSuggestionService = foodSuggestionService;
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<List<FoodSuggestionDto>>> GetAll()
     {
@@ -33,6 +34,7 @@ public class FoodSuggestionsController : ControllerBase
         return Ok(foodSuggestions);
     }
 
+    [AllowAnonymous]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<FoodSuggestionDto>> GetById(int id)
     {

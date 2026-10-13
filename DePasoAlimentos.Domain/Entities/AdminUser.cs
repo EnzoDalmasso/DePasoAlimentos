@@ -13,4 +13,8 @@ public class AdminUser
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public DateTime? LastLoginAt { get; set; }
+
+    public int FailedLoginAttempts { get; set; }
+
+    public DateTime? LockoutEndsAt { get; set; }
 }

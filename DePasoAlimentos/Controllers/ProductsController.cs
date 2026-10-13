@@ -18,6 +18,7 @@ public class ProductsController : ControllerBase
 
 
     //Este metodo obtiene todos los productos
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<List<ProductDto>>> GetAll()
     {
@@ -37,6 +38,7 @@ public class ProductsController : ControllerBase
     }
 
     //Este metodo obtiene un producto por su id
+    [AllowAnonymous]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ProductDto>> GetById(int id)
     {

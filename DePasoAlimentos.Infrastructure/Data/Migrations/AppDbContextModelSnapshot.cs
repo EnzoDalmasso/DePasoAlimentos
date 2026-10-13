@@ -38,10 +38,16 @@ namespace DePasoAlimentos.Infrastructure.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
+                    b.Property<int>("FailedLoginAttempts")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
                     b.Property<DateTime?>("LastLoginAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("LockoutEndsAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PasswordHash")

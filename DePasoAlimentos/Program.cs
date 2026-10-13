@@ -6,6 +6,8 @@ using DePasoAlimentos.Infrastructure.Data;
 using DePasoAlimentos.Infrastructure.Repositories;
 using DePasoAlimentos.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -33,9 +35,31 @@ builder.Services.AddCors(options =>
     });
 });
 
+// La API corre detras del proxy de Render: sin esto todas las requests
+// llegan con la IP del proxy y el rate limit por IP no sirve.
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.ForwardLimit = 1;
+    options.KnownIPNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 120,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0
+            }
+        )
+    );
 
     options.AddPolicy(AuthRateLimitPolicyName, httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(
@@ -106,6 +130,14 @@ builder.Services
         };
     });
 
+// Todo endpoint requiere autenticacion salvo que se marque [AllowAnonymous].
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -128,9 +160,11 @@ catch (Exception exception)
 }
 
 // Configure the HTTP request pipeline.
+app.UseForwardedHeaders();
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.MapOpenApi().AllowAnonymous();
 }
 else
 {
@@ -158,8 +192,8 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapGet("/", () => Results.Ok("DePasoAlimentos API funcionando."));
-app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+app.MapGet("/", () => Results.Ok("DePasoAlimentos API funcionando.")).AllowAnonymous();
+app.MapGet("/health", () => Results.Ok(new { status = "ok" })).AllowAnonymous();
 
 app.MapControllers();
 

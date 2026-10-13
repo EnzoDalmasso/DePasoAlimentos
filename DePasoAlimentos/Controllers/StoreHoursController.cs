@@ -16,6 +16,7 @@ public class StoreHoursController : ControllerBase
         _storeHoursService = storeHoursService;
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<StoreHoursDto>> Get()
     {

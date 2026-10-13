@@ -12,6 +12,9 @@ namespace DePasoAlimentos.Application.Services;
 
 public class AuthService : IAuthService
 {
+    private const int MaxFailedLoginAttempts = 5;
+    private static readonly TimeSpan LockoutDuration = TimeSpan.FromMinutes(15);
+
     private readonly IAdminUserRepository _adminUserRepository;
     private readonly IConfiguration _configuration;
     private readonly PasswordHasher<AdminUser> _passwordHasher;
@@ -34,6 +37,11 @@ public class AuthService : IAuthService
             return null;
         }
 
+        if (adminUser.LockoutEndsAt > DateTime.UtcNow)
+        {
+            return null;
+        }
+
         var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(
             adminUser,
             adminUser.PasswordHash,
@@ -42,9 +50,22 @@ public class AuthService : IAuthService
 
         if (passwordVerificationResult == PasswordVerificationResult.Failed)
         {
+            adminUser.FailedLoginAttempts++;
+
+            if (adminUser.FailedLoginAttempts >= MaxFailedLoginAttempts)
+            {
+                adminUser.LockoutEndsAt = DateTime.UtcNow.Add(LockoutDuration);
+                adminUser.FailedLoginAttempts = 0;
+            }
+
+            _adminUserRepository.Update(adminUser);
+            await _adminUserRepository.SaveChangesAsync();
+
             return null;
         }
 
+        adminUser.FailedLoginAttempts = 0;
+        adminUser.LockoutEndsAt = null;
         adminUser.LastLoginAt = DateTime.UtcNow;
 
         _adminUserRepository.Update(adminUser);

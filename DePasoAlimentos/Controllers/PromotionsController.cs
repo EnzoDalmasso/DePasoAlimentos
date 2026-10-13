@@ -16,6 +16,7 @@ public class PromotionsController : ControllerBase
         _promotionService = promotionService;
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<List<PromotionDto>>> GetAll()
     {
@@ -33,6 +34,7 @@ public class PromotionsController : ControllerBase
         return Ok(promotions);
     }
 
+    [AllowAnonymous]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<PromotionDto>> GetById(int id)
     {
