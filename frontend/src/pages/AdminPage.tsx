@@ -99,6 +99,23 @@ export function AdminPage() {
     loadProducts()
   }, [adminToken])
 
+  // El token dura poco: cuando vence, cerramos la sesion en vez de dejar
+  // que las acciones fallen con errores genericos.
+  useEffect(() => {
+    if (!adminToken) {
+      return
+    }
+
+    const intervalId = window.setInterval(() => {
+      if (!getAdminToken()) {
+        handleLogout()
+        setLoginErrorMessage('Tu sesión expiró. Volvé a iniciar sesión.')
+      }
+    }, 30_000)
+
+    return () => window.clearInterval(intervalId)
+  }, [adminToken])
+
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 

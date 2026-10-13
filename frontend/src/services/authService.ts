@@ -51,7 +51,25 @@ export async function changeAdminPassword(
 }
 
 export function getAdminToken() {
-  return localStorage.getItem(ADMIN_TOKEN_KEY)
+  const token = localStorage.getItem(ADMIN_TOKEN_KEY)
+
+  if (token && isTokenExpired(token)) {
+    logoutAdmin()
+    return null
+  }
+
+  return token
+}
+
+function isTokenExpired(token: string) {
+  try {
+    const payloadBase64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    const payload: { exp?: number } = JSON.parse(atob(payloadBase64))
+
+    return !payload.exp || payload.exp * 1000 <= Date.now()
+  } catch {
+    return true
+  }
 }
 
 export function getAdminEmail() {

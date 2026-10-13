@@ -17,19 +17,23 @@ const string AuthRateLimitPolicyName = "AuthRateLimit";
 
 var builder = WebApplication.CreateBuilder(args);
 
+// No revelar el servidor web en las respuestas.
+builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
+
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+string[] allowedOrigins = builder.Environment.IsDevelopment()
+    ? ["http://localhost:5173", "https://de-paso-alimentos.vercel.app"]
+    : ["https://de-paso-alimentos.vercel.app"];
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(CorsPolicyName, policy =>
     {
         policy
-            .WithOrigins(
-                "http://localhost:5173",
-                "https://de-paso-alimentos.vercel.app"
-            )
+            .WithOrigins(allowedOrigins)
             .AllowAnyHeader()
             .AllowAnyMethod();
     });

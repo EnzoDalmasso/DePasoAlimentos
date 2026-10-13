@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DePasoAlimentos.Application.Validation;
 
 namespace DePasoAlimentos.Application.DTOs.Promotions;
 
-public class CreatePromotionRequest
+public class CreatePromotionRequest : IValidatableObject
 {
     [Required]
     [StringLength(100)]
@@ -17,9 +18,21 @@ public class CreatePromotionRequest
 
     [Required]
     [StringLength(500)]
+    [StorageImageUrl]
     public string ImageUrl { get; set; } = string.Empty;
 
     public DateTime? StartsAt { get; set; }
 
     public DateTime? EndsAt { get; set; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (StartsAt.HasValue && EndsAt.HasValue && EndsAt < StartsAt)
+        {
+            yield return new ValidationResult(
+                "La fecha de fin no puede ser anterior a la de inicio.",
+                [nameof(EndsAt)]
+            );
+        }
+    }
 }

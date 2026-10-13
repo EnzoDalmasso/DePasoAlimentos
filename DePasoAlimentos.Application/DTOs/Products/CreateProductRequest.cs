@@ -1,5 +1,6 @@
 ﻿//namespace DePasoAlimentos.Application.DTOs.Products;
 using System.ComponentModel.DataAnnotations;
+using DePasoAlimentos.Application.Validation;
 
 namespace DePasoAlimentos.Application.DTOs.Products;
 
@@ -22,5 +23,6 @@ public class CreateProductRequest
 
     [Required]
     [StringLength(500)]
+    [StorageImageUrl]
     public string ImageUrl { get; set; } = string.Empty;
 }
